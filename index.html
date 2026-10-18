@@ -168,6 +168,8 @@ main { padding-block: 8px calc(var(--nav-h) + 32px); display: flex; flex-directi
 .row.bump .sc { color: var(--live); }
 .tvline { grid-column: 2; margin-top: 7px; font-size: .8rem; color: var(--muted); display: flex; gap: 6px; align-items: baseline; min-width: 0; }
 .tvline span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tvbar { display: flex; align-items: baseline; gap: 8px; margin: 0 14px 12px; padding: 9px 12px; border-radius: 10px; background: var(--surface-2); font-size: .86rem; }
+.tvbar b { font-weight: 700; }
 .tag { flex: none; font-size: .66rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); background: var(--surface-2); border-radius: 4px; padding: 2px 5px; }
 
 /* ---------- placar grande (tela do jogo) ---------- */
@@ -543,7 +545,9 @@ function gameHTML(g, opts = {}) {
 }
 // Converte um jogo da agenda do time (servidor) no mesmo formato da tabela de jogos.
 function fromSched(e, lg) {
+  const known = state.games.get(`${lg}:${e.id}`) || (lgGamesCache.get(lg) || []).find?.((g) => g.id === `${lg}:${e.id}`);
   return {
+    channels_override: known?.channels_override || null,
     id: `${lg}:${e.id}`, league_id: lg, starts_at: e.date, state: e.state, status_detail: e.detail, clock: e.clock, period: e.period,
     home_name: e.home.name, home_short: e.home.short, home_logo: e.home.logo, home_score: e.home.score, home_team_id: e.home.id,
     away_name: e.away.name, away_short: e.away.short, away_logo: e.away.logo, away_score: e.away.score, away_team_id: e.away.id,
@@ -615,7 +619,7 @@ function viewHome() {
     const nLive = gs.filter((g) => g.state === "in").length;
     out += `<section class="section" style="--c: var(--lg-${lg.id})">
       <div class="sec-head"><a href="#/liga/${lg.id}"><h2><i></i>${esc(lg.name)}</h2>${ICON.chev}</a><small>${nLive ? `${nLive} ao vivo · ` : ""}${gs.length} jogo${gs.length > 1 ? "s" : ""}</small></div>
-      ${lg.channels ? `<div class="lg-tv">Onde ver: <b>${esc(lg.channels)}</b></div>` : ""}
+      ${lg.channels && !gs.some((g) => g.channels_override) ? `<div class="lg-tv">Canais do campeonato: <b>${esc(lg.channels)}</b></div>` : ""}
       <div class="card">${gs.map((g) => gameHTML(g)).join("")}</div>
     </section>`;
   }
@@ -795,15 +799,25 @@ function renderResults() {
 const LEADER_PT = { "Passing Yards": "Jardas de passe", "Rushing Yards": "Jardas de corrida", "Receiving Yards": "Jardas recebidas", "Points": "Pontos", "Rebounds": "Rebotes", "Assists": "Assistências", "Points Per Game": "Pontos por jogo", "Rebounds Per Game": "Rebotes por jogo", "Assists Per Game": "Assistências por jogo" };
 const FORM_PT = { W: "V", D: "E", L: "D" };
 
-function gameFromList(lg, id) { return state.games.get(`${lg}:${id}`) || (lgGamesCache.get(lg) || []).find((g) => g.id === `${lg}:${id}`); }
+const rowCache = new Map();
+function gameFromList(lg, id) {
+  const k = `${lg}:${id}`;
+  const g = state.games.get(k) || (lgGamesCache.get(lg) || []).find((x) => x.id === k) || rowCache.get(k);
+  if (!g && sb && !rowCache.has(k)) {
+    rowCache.set(k, null);
+    sb.from("games").select(COLS).eq("id", k).maybeSingle().then(({ data }) => { if (data) { rowCache.set(k, data); rerenderIf("jogo", lg, id); } });
+  }
+  return g || null;
+}
 function viewGame(lg, id) {
   const params = { type: "game", league: lg, id };
   const data = peek(params);
   const L = leagueOf(lg);
+  const row = gameFromList(lg, id);
   if (!data || data.error) {
     if (!data) loadGame(lg, id);
     const g = gameFromList(lg, id);
-    return { title: L.short_name, html: (g ? `<div class="card">${heroFromRow(g)}</div>` : "") + (data?.error ? errorBox(data.error) : skeleton(4)) };
+    return { title: L.short_name, html: (g ? `<div class="card">${heroFromRow(g)}${tvBar(g)}</div>` : "") + (data?.error ? errorBox(data.error) : skeleton(4)) };
   }
   const key = `jogo:${lg}:${id}`;
   const soccer = data.sport === "soccer";
@@ -824,7 +838,7 @@ function viewGame(lg, id) {
   else if (tab === "confronto") body = confrontBlock(data, lg);
   return {
     title: L.short_name,
-    html: `<div class="card">${hero(data)}<div class="tabs" role="tablist">${tabs.map(([k, l]) => tabBtn(k, l, tab)).join("")}</div></div>${body}`,
+    html: `<div class="card">${hero(data)}${tvBar(row)}<div class="tabs" role="tablist">${tabs.map(([k, l]) => tabBtn(k, l, tab)).join("")}</div></div>${body}`,
   };
 }
 const loading = new Set();
@@ -836,6 +850,10 @@ function loadGame(lg, id, force) {
   api(params, force ? 0 : 15000)
     .catch((e) => { if (!peek(params)) apiCache.set(k, { at: Date.now(), data: { error: e.message } }); })
     .finally(() => { loading.delete(k); rerenderIf("jogo", lg, id); });
+}
+function tvBar(g) {
+  if (!g?.channels_override) return "";
+  return `<div class="tvbar"><span class="tag">TV</span><span>Onde assistir: <b>${esc(g.channels_override)}</b></span></div>`;
 }
 function sideTeam(d, side) { return d.teams.find((t) => t.side === side) || { name: "", short: "", logo: null }; }
 function heroStatus(d) {
@@ -892,7 +910,6 @@ function lastName(n) { const p = String(n || "").trim().split(/\s+/); return p.l
 function gameSummary(d, lg, id) {
   const g = gameFromList(lg, id);
   const L = leagueOf(lg);
-  const tv = g?.channels_override || L.channels;
   const sides = isUS(lg) ? ["away", "home"] : ["home", "away"];
   let html = "";
   if (d.sport === "soccer") {
@@ -920,7 +937,8 @@ function gameSummary(d, lg, id) {
   if (d.state === "pre" && d.form.length) html += formBlock(d);
   html += `<section class="section"><div class="sec-title">Informações</div><div class="card"><dl class="info">
     <dt>Data</dt><dd>${esc(fullDate(d.date))}</dd>
-    <dt>Onde ver</dt><dd>${esc(tv || "A confirmar")}</dd>
+    <dt>Onde ver</dt><dd>${g?.channels_override ? esc(g.channels_override)
+      : `<span class="muted" style="font-weight:500">Ainda sem confirmação para este jogo.${L.channels ? ` Costuma passar em: ${esc(L.channels)}` : ""}</span>`}</dd>
     ${d.venue ? `<dt>Local</dt><dd>${esc(d.venue)}</dd>` : ""}
     ${d.referee ? `<dt>Árbitro</dt><dd>${esc(d.referee)}</dd>` : ""}
     ${d.attendance ? `<dt>Público</dt><dd>${Number(d.attendance).toLocaleString("pt-BR")}</dd>` : ""}
