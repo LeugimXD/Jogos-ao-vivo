@@ -1,0 +1,37 @@
+name: FURIA no CS2
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/cs2.yml"
+      - "scripts/cs2.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cs2
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Buscar jogos da FURIA na Liquipedia
+        run: python3 scripts/cs2.py
+      - name: Salvar se mudou
+        run: |
+          if [ -n "$(git status --porcelain data/)" ]; then
+            git config user.name "jogos-ao-vivo-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/
+            git commit -m "Atualiza jogos da FURIA (CS2)"
+            git pull --rebase origin main
+            git push
+          fi
