@@ -468,14 +468,16 @@ function noteChange(prev, g) {
   const h = prev.home_score !== g.home_score, a = prev.away_score !== g.away_score;
   if (h || a) bumps.set(g.id, { at: Date.now(), home: h, away: a });
 }
+let leaguesLoadedAt = 0;
 async function refresh() {
   if (!sb) return;
   try {
-    if (!state.leagues.length) await loadLeagues();
+    // Confere a lista de campeonatos a cada abertura (e de hora em hora), para campeonato novo aparecer sem precisar limpar nada.
+    if (!leaguesLoadedAt || Date.now() - leaguesLoadedAt > 3600e3) { await loadLeagues(); leaguesLoadedAt = Date.now(); }
     await loadGames();
     state.online = true;
   } catch { state.online = false; }
-  if (route().name === "home") render();
+  if (["home", "ligas"].includes(route().name)) render();
 }
 
 const apiCache = new Map();
