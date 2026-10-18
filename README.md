@@ -6,6 +6,6 @@ Agenda, placar ao vivo e onde assistir no Brasil: Brasileirão, Premier League, 
 - O app recebe as mudanças em tempo real e pisca a linha quando sai gol/ponto.
 - Tela do jogo: resumo com lances (gols, cartões, substituições) ou pontuações, escalações no campinho, estatísticas, tabela e confronto/forma recente. Esses detalhes vêm da função `espn` (pasta `supabase/functions/espn`), que busca na ESPN sob demanda e guarda em cache.
 - Campeonatos (jogos dos próximos 14 dias, resultados e tabela), página de cada time (próximos jogos, resultados e posição) e busca de times.
-- "Onde ver" usa os canais padrão de cada campeonato; dá para cravar o canal de um jogo específico na coluna `channels_override` da tabela `games`.
+- "Onde assistir" de cada jogo vem da programação de TV do Brasil (futnatv.net), lida a cada 3 horas pela função `channels` (pasta `supabase/functions/channels`). Jogos da NFL/NBA sem transmissão na TV aparecem com o pacote oficial (NFL Game Pass/DAZN, NBA League Pass). Para cravar um canal na mão, preencha `channels_override` e marque `channels_source = 'manual'` na tabela `games`; a rotina não mexe nesses.
 
 Para instalar no iPhone: abra o endereço no Safari → Compartilhar → Adicionar à Tela de Início. No Android: menu do Chrome → Instalar app.
