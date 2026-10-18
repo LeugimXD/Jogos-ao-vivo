@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Jogos ao Vivo</title>
-<meta name="description" content="Agenda, placar ao vivo, escalações, tabela e onde assistir: Brasileirão, Premier League, Champions, NBA e NFL.">
+<meta name="description" content="Agenda, placar ao vivo, escalações, tabela e onde assistir: Brasileirão, Premier League, La Liga, Serie A, Bundesliga, Ligue 1, Champions, NBA e NFL.">
 <meta name="theme-color" content="#0f1520">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -40,6 +40,10 @@
   --pitch-line: rgba(255, 255, 255, .45);
   --lg-bra1: #138048;
   --lg-epl: #5b2a86;
+  --lg-esp1: #c06a00;
+  --lg-ita1: #0a7c9a;
+  --lg-ger1: #a0174f;
+  --lg-fra1: #0e8a74;
   --lg-ucl: #1c3a8a;
   --lg-nba: #c9462a;
   --lg-nfl: #0b5aa8;
@@ -59,7 +63,7 @@
     --live: #ff4d55; --live-soft: #3a1418; --flash: #4a3f12;
     --win: #3dcc7c; --draw: #7d879a; --loss: #ff5a61; --yellow: #f5cd2a;
     --pitch: #1d5a37; --pitch-2: #1a5232; --pitch-line: rgba(255, 255, 255, .3);
-    --lg-bra1: #3dcc7c; --lg-epl: #b98ae6; --lg-ucl: #7f9cf0; --lg-nba: #ff8a66; --lg-nfl: #64a8f0;
+    --lg-bra1: #3dcc7c; --lg-epl: #b98ae6; --lg-esp1: #f2a54a; --lg-ita1: #55c1e0; --lg-ger1: #e679a6; --lg-fra1: #45d1b4; --lg-ucl: #7f9cf0; --lg-nba: #ff8a66; --lg-nfl: #64a8f0;
     --shadow: none;
     color-scheme: dark;
   }
@@ -70,7 +74,7 @@
   --live: #ff4d55; --live-soft: #3a1418; --flash: #4a3f12;
   --win: #3dcc7c; --draw: #7d879a; --loss: #ff5a61; --yellow: #f5cd2a;
   --pitch: #1d5a37; --pitch-2: #1a5232; --pitch-line: rgba(255, 255, 255, .3);
-  --lg-bra1: #3dcc7c; --lg-epl: #b98ae6; --lg-ucl: #7f9cf0; --lg-nba: #ff8a66; --lg-nfl: #64a8f0;
+  --lg-bra1: #3dcc7c; --lg-epl: #b98ae6; --lg-esp1: #f2a54a; --lg-ita1: #55c1e0; --lg-ger1: #e679a6; --lg-fra1: #45d1b4; --lg-ucl: #7f9cf0; --lg-nba: #ff8a66; --lg-nfl: #64a8f0;
   --shadow: none;
   color-scheme: dark;
 }
@@ -348,14 +352,18 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const API = SUPABASE_URL + "/functions/v1/espn";
 const COLS = "id,league_id,starts_at,state,status_detail,clock,period,home_name,home_short,home_logo,home_score,home_team_id,away_name,away_short,away_logo,away_score,away_team_id,venue,channels_override,updated_at";
 const DAY = 86400000;
-const SPORT = { bra1: "soccer", epl: "soccer", ucl: "soccer", nba: "basketball", nfl: "football" };
-const BADGE = { bra1: "BRA", epl: "PL", ucl: "UCL", nba: "NBA", nfl: "NFL" };
+const SPORT = { bra1: "soccer", epl: "soccer", esp1: "soccer", ita1: "soccer", ger1: "soccer", fra1: "soccer", ucl: "soccer", nba: "basketball", nfl: "football" };
+const BADGE = { bra1: "BRA", epl: "PL", esp1: "ESP", ita1: "ITA", ger1: "ALE", fra1: "FRA", ucl: "UCL", nba: "NBA", nfl: "NFL" };
 const DEFAULT_LEAGUES = [
   { id: "bra1", name: "Brasileirão Série A", short_name: "Brasileirão", sort: 1 },
   { id: "epl", name: "Premier League", short_name: "Premier League", sort: 2 },
-  { id: "ucl", name: "UEFA Champions League", short_name: "Champions", sort: 3 },
-  { id: "nba", name: "NBA", short_name: "NBA", sort: 4 },
-  { id: "nfl", name: "NFL", short_name: "NFL", sort: 5 },
+  { id: "esp1", name: "La Liga", short_name: "La Liga", sort: 3 },
+  { id: "ita1", name: "Serie A (Itália)", short_name: "Serie A", sort: 4 },
+  { id: "ger1", name: "Bundesliga", short_name: "Bundesliga", sort: 5 },
+  { id: "fra1", name: "Ligue 1", short_name: "Ligue 1", sort: 6 },
+  { id: "ucl", name: "UEFA Champions League", short_name: "Champions", sort: 7 },
+  { id: "nba", name: "NBA", short_name: "NBA", sort: 8 },
+  { id: "nfl", name: "NFL", short_name: "NFL", sort: 9 },
 ];
 
 const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
@@ -488,10 +496,10 @@ function peek(params) {
 }
 
 async function teamsList() {
-  const c = store.get("teams_v1", null);
+  const c = store.get("teams_v2", null);
   if (c && Date.now() - c.at < DAY && c.list?.length) return c.list;
   const list = await api({ type: "teams" }, DAY);
-  store.set("teams_v1", { at: Date.now(), list });
+  store.set("teams_v2", { at: Date.now(), list });
   return list;
 }
 
@@ -791,7 +799,7 @@ function renderResults() {
     `<a href="#/liga/${l.id}" style="--c: var(--lg-${l.id})"><span class="lgbadge" style="width:32px;height:32px;border-radius:9px;background:var(--c);display:grid;place-items:center;color:#fff;font-size:.62rem;font-weight:900">${BADGE[l.id]}</span><div style="min-width:0"><b>${esc(l.name)}</b></div><span></span>${ICON.chev}</a>`).join("")}</div></section>`;
   if (hits.length) html += `<section class="section"><div class="sec-title">Times</div><div class="card res">${hits.map(({ t }) =>
     `<a href="#/time/${t.league}/${esc(t.id)}">${logoImg(t.logo, "", 32)}<div style="min-width:0"><b>${esc(t.name)}</b></div><span class="lgtag" style="--c: var(--lg-${t.league})">${esc(leagueOf(t.league).short_name)}</span>${ICON.chev}</a>`).join("")}</div></section>`;
-  if (!html) html = `<div class="empty"><strong>Nada encontrado</strong><span>Confira a grafia. A busca cobre os times do Brasileirão, Premier League, Champions, NBA e NFL.</span></div>`;
+  if (!html) html = `<div class="empty"><strong>Nada encontrado</strong><span>Confira a grafia. A busca cobre os times de todos os campeonatos do app.</span></div>`;
   box.innerHTML = html;
 }
 

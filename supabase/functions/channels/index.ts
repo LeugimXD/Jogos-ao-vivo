@@ -10,7 +10,11 @@ const SECTIONS: { prefix: string; pick: (c: string) => string | null }[] = [
     prefix: "",
     pick: (c) => c === "Brasileirão - Série A" ? "bra1"
       : /^Champions League$/i.test(c) ? "ucl"
-      : /^(Campeonato Inglês|Premier League)$/i.test(c) ? "epl" : null,
+      : /^(Campeonato Inglês|Premier League)$/i.test(c) ? "epl"
+      : /^(Campeonato Espanhol|La Liga)$/i.test(c) ? "esp1"
+      : /^(Campeonato Italiano|Serie A)$/i.test(c) ? "ita1"
+      : /^(Campeonato Alemão|Bundesliga)$/i.test(c) ? "ger1"
+      : /^(Campeonato Francês|Ligue 1)$/i.test(c) ? "fra1" : null,
   },
   { prefix: "nfl/", pick: (c) => /^NFL$/i.test(c) ? "nfl" : null },
   { prefix: "basquete/", pick: (c) => /^NBA$/i.test(c) ? "nba" : null },
@@ -23,7 +27,11 @@ type Any = any;
 type Row = { league: string; date: string; time: string; a: string; b: string; tv: string };
 
 const STOP = new Set(["fc", "cf", "sc", "ac", "fk", "de", "da", "do", "del", "la", "le", "the", "club", "clube", "cd", "ud", "sv", "afc", "sk", "city"]);
-const ALIAS: Record<string, string> = { munique: "munich", milao: "milan", praga: "prague", lisboa: "lisbon", inter: "internazionale", turim: "turin", roma: "roma" };
+const ALIAS: Record<string, string> = {
+  munique: "munich", milao: "milan", praga: "prague", lisboa: "lisbon", inter: "internazionale", turim: "turin",
+  colonia: "cologne", koln: "cologne", gladbach: "monchengladbach", "m gladbach": "monchengladbach", sevilha: "sevilla",
+  napoles: "napoli", florenca: "fiorentina", genova: "genoa", marselha: "marseille", lyon: "lyon", estrasburgo: "strasbourg",
+};
 const norm = (s: string) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 function toks(s: string) {
   return norm(s).replace(/[^a-z0-9 ]/g, " ").split(/\s+/)
@@ -37,14 +45,14 @@ function sim(a: string, variants: (string | null)[]) {
     if (!v) continue;
     const tv = toks(v);
     let c = 0;
-    for (const x of ta) if (tv.some((y) => y === x || (x.length >= 4 && y.length >= 4 && (y.startsWith(x) || x.startsWith(y))))) c++;
+    for (const x of ta) if (tv.some((y) => y === x || (x.length >= 4 && y.length >= 4 && (y.startsWith(x) || x.startsWith(y))) || (x.length >= 6 && y.length >= 6 && (y.includes(x) || x.includes(y))))) c++;
     best = Math.max(best, c);
   }
   return best;
 }
 function cleanTv(s: string) {
   // protege "e" e vírgulas dentro de parênteses, ex.: "Globo (RS e MG)"
-  const parts = s.replace(/\bYT\s*\(([^)]+)\)/g, "$1 (YouTube)").replace(/HBO MAX/gi, "HBO Max")
+  const parts = s.replace(/\b(?:YT|YouTube)\s*\(([^)]+)\)/g, "$1 (YouTube)").replace(/HBO MAX/gi, "HBO Max")
     .replace(/\(([^)]*)\)/g, (m) => m.replace(/ e /g, " \u0001 ").replace(/,/g, "\u0002"))
     .split(/,\s*|\s+e\s+/)
     .map((x) => x.replace(/<[^>]*>/g, "").replace(/\u0001/g, "e").replace(/\u0002/g, ",").replace(/\s+/g, " ").trim())

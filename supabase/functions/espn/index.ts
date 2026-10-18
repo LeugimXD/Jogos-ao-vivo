@@ -9,6 +9,10 @@ type Sport = "soccer" | "football" | "basketball";
 const LG: Record<string, { path: string; sport: Sport }> = {
   bra1: { path: "soccer/bra.1", sport: "soccer" },
   epl: { path: "soccer/eng.1", sport: "soccer" },
+  esp1: { path: "soccer/esp.1", sport: "soccer" },
+  ita1: { path: "soccer/ita.1", sport: "soccer" },
+  ger1: { path: "soccer/ger.1", sport: "soccer" },
+  fra1: { path: "soccer/fra.1", sport: "soccer" },
   ucl: { path: "soccer/uefa.champions", sport: "soccer" },
   nba: { path: "basketball/nba", sport: "basketball" },
   nfl: { path: "football/nfl", sport: "football" },
@@ -299,6 +303,10 @@ const GROUP_NAMES: Record<string, string> = {
   "League Phase": "Fase de liga",
 };
 const NOTE_PT: [RegExp, string][] = [
+  [/relegation play-?off/i, "Playoff de rebaixamento"],
+  [/champions league qualif/i, "Fase prévia da Champions"],
+  [/europa league qualif/i, "Fase prévia da Europa League"],
+  [/conference league qualif/i, "Fase prévia da Conference"],
   [/round of 16/i, "Oitavas de final"],
   [/knockout round play-?off/i, "Playoff das oitavas"],
   [/champions league/i, "Champions League"],
@@ -337,7 +345,7 @@ function mapStandings(j: Any, lgId: string) {
     rows.sort((a: Any, b: Any) =>
       sport === "soccer" ? (a.rank ?? 99) - (b.rank ?? 99) : (a.seed ?? 99) - (b.seed ?? 99) || b.pct - a.pct);
     rows.forEach((r: Any, i: number) => (r.pos = i + 1));
-    const name = GROUP_NAMES[c.name] ?? (/^\d{4}/.test(c.name ?? "") ? "Classificação" : c.name ?? "Classificação");
+    const name = GROUP_NAMES[c.name] ?? (/\d{4}/.test(c.name ?? "") ? "Classificação" : c.name ?? "Classificação");
     return { name, rows: rows.map(({ pct: _p, seed: _s, rank: _r, ...r }: Any) => r) };
   });
   return { league: lgId, sport, cols: cols.map(([, l]) => l), groups };
@@ -405,7 +413,7 @@ Deno.serve(async (req) => {
   const id = u.searchParams.get("id") ?? "";
   try {
     if (type === "teams") {
-      return json(await cached("teams", async () => ({ body: await allTeams(), ttl: 86400 })), 200, 3600);
+      return json(await cached("teams:v2", async () => ({ body: await allTeams(), ttl: 86400 })), 200, 3600);
     }
     if (!LG[lg]) return json({ error: "Campeonato desconhecido" }, 400);
     if (type === "standings") {
