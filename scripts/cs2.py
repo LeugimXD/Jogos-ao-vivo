@@ -130,7 +130,17 @@ def parse_match(b):
     full = team_full_names(b)
     logos = team_logos(b)
     now = time.time()
-    state = "in" if live else ("post" if finished else ("pre" if ts > now - 300 else ("in" if ts > now - 6 * 3600 else "post")))
+    decided = bool(score and bo and max(score) > int(bo.group(1)) // 2)
+    if live:
+        state = "in"
+    elif finished or (decided and ts < now - 3600):
+        state = "post"
+    elif ts > now - 300:
+        state = "pre"
+    elif ts > now - 12 * 3600:
+        state = "in"  # já devia ter começado e ainda não tem vencedor: em andamento ou atrasado
+    else:
+        return None  # sem resultado depois de 12 h: informação incerta, melhor não mostrar
     mid = hashlib.sha1(f"{ts}|{'|'.join(sorted(names))}".encode()).hexdigest()[:10]
     return {
         "id": mid,
