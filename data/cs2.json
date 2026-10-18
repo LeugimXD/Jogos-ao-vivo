@@ -1,0 +1,108 @@
+{
+ "source": "Liquipedia",
+ "license": "CC-BY-SA 3.0",
+ "team": "FURIA",
+ "matches": [
+  {
+   "id": "84fe53222e",
+   "ts": 1792004400,
+   "state": "post",
+   "teams": [
+    {
+     "name": "FURIA",
+     "logo": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/51px-FURIA_Esports_allmode.png",
+     "score": 2
+    },
+    {
+     "name": "BB",
+     "logo": "https://liquipedia.net/commons/images/thumb/5/5b/BetBoom_Team_2024_allmode.png/56px-BetBoom_Team_2024_allmode.png",
+     "score": 0
+    }
+   ],
+   "bestof": 3,
+   "tournament": "Thunderpick World Champ. '26 - Group B",
+   "streams": []
+  },
+  {
+   "id": "9530beec93",
+   "ts": 1792090200,
+   "state": "post",
+   "teams": [
+    {
+     "name": "Legacy",
+     "logo": "https://liquipedia.net/commons/images/thumb/3/34/Legacy_allmode.png/49px-Legacy_allmode.png",
+     "score": 1
+    },
+    {
+     "name": "FURIA",
+     "logo": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/51px-FURIA_Esports_allmode.png",
+     "score": 2
+    }
+   ],
+   "bestof": 3,
+   "tournament": "Thunderpick World Champ. '26 - Group B",
+   "streams": []
+  },
+  {
+   "id": "bf48171411",
+   "ts": 1792245600,
+   "state": "post",
+   "teams": [
+    {
+     "name": "Aurora",
+     "logo": "https://liquipedia.net/commons/images/thumb/1/1c/Aurora_Gaming_2025_allmode.png/50px-Aurora_Gaming_2025_allmode.png",
+     "score": 0
+    },
+    {
+     "name": "FURIA",
+     "logo": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/51px-FURIA_Esports_allmode.png",
+     "score": 2
+    }
+   ],
+   "bestof": 3,
+   "tournament": "Thunderpick World Champ. '26 - Playoffs",
+   "streams": []
+  },
+  {
+   "id": "ed1eed65df",
+   "ts": 1792338900,
+   "state": "in",
+   "teams": [
+    {
+     "name": "BB",
+     "logo": "https://liquipedia.net/commons/images/thumb/5/5b/BetBoom_Team_2024_allmode.png/56px-BetBoom_Team_2024_allmode.png",
+     "score": 0
+    },
+    {
+     "name": "FURIA",
+     "logo": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/51px-FURIA_Esports_allmode.png",
+     "score": 0
+    }
+   ],
+   "bestof": 5,
+   "tournament": "Thunderpick World Champ. '26 - Playoffs",
+   "streams": []
+  },
+  {
+   "id": "99df410e6e",
+   "ts": 1792857600,
+   "state": "pre",
+   "teams": [
+    {
+     "name": "FURIA",
+     "logo": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/51px-FURIA_Esports_allmode.png",
+     "score": null
+    },
+    {
+     "name": "DENDELE",
+     "logo": "https://liquipedia.net/commons/images/thumb/8/87/DENDELE_CS_allmode.png/38px-DENDELE_CS_allmode.png",
+     "score": null
+    }
+   ],
+   "bestof": 3,
+   "tournament": "PGL Masters Bucharest 2026 - Round 1",
+   "streams": []
+  }
+ ],
+ "updated": "2026-10-18T21:09:18+00:00"
+}
