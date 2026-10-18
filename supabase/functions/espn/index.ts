@@ -397,6 +397,64 @@ async function allTeams() {
   return out;
 }
 
+// ---------- fotos dos jogadores (TheSportsDB, com cache no banco) ----------
+const normName = (s: string) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+async function findPhoto(name: string, team: string): Promise<string | null | "limit"> {
+  const r = await fetch(`https://www.thesportsdb.com/api/v1/json/123/searchplayers.php?p=${encodeURIComponent(name.replace(/\s+/g, "_"))}`);
+  if (r.status === 429) return "limit";
+  if (!r.ok) return null;
+  const j = await r.json().catch(() => null);
+  // O nome tem que bater: igual, ou (nome com 2+ palavras) todas as palavras presentes. Evita "Rafael" virar "Rafael Tolói".
+  const nq = normName(name), qt = nq.split(" ");
+  const list = (j?.player ?? []).filter((p: Any) => /soccer/i.test(p.strSport ?? "")).filter((p: Any) => {
+    const nn = normName(p.strPlayer ?? "");
+    if (nn === nq) return true;
+    if (qt.length < 2) return false;
+    const pt = nn.split(" ");
+    return qt.every((t) => pt.includes(t));
+  });
+  if (!list.length) return null;
+  const nt = normName(team);
+  const sameTeam = list.find((p: Any) => { const t = normName(p.strTeam ?? ""); return t && nt && (t.includes(nt) || nt.includes(t)); });
+  const pick = sameTeam ?? (list.length === 1 ? list[0] : null);
+  const img = pick?.strThumb || pick?.strCutout;
+  return img ? `${img}/tiny` : null;
+}
+async function gamePhotos(lg: string, id: string) {
+  const { data: cache } = await sb.from("espn_cache").select("body").eq("key", `game:${lg}:${id}`).maybeSingle();
+  const g = cache?.body;
+  if (!g?.lineups?.length) return { photos: {}, pending: 0 };
+  const teamName: Record<string, string> = {};
+  for (const t of g.teams ?? []) teamName[t.side] = t.name;
+  const people: { pid: string; key: string; name: string; team: string }[] = [];
+  for (const l of g.lineups) for (const p of [...(l.starters ?? []), ...(l.bench ?? [])]) {
+    if (!p.n) continue;
+    const team = teamName[l.side] ?? "";
+    people.push({ pid: p.id, key: `${normName(p.n)}|${normName(team)}`, name: p.n, team });
+  }
+  const keys = [...new Set(people.map((p) => p.key))];
+  const { data: rows } = await sb.from("player_photos").select("key, url, checked_at").in("key", keys);
+  const known = new Map((rows ?? []).map((r: Any) => [r.key, r]));
+  const stale = (r: Any) => !r || (!r.url && Date.now() - new Date(r.checked_at).getTime() > 7 * 86400e3);
+  const todo = people.filter((p, i, a) => stale(known.get(p.key)) && a.findIndex((x) => x.key === p.key) === i).slice(0, 24);
+  let limited = false;
+  for (let i = 0; i < todo.length && !limited; i += 6) {
+    const batch = todo.slice(i, i + 6);
+    const res = await Promise.all(batch.map((p) => findPhoto(p.name, p.team).catch(() => null)));
+    const save: Any[] = [];
+    batch.forEach((p, k) => {
+      if (res[k] === "limit") { limited = true; return; }
+      const row = { key: p.key, name: p.name, team: p.team, url: res[k], checked_at: new Date().toISOString() };
+      known.set(p.key, row); save.push(row);
+    });
+    if (save.length) await sb.from("player_photos").upsert(save);
+  }
+  const photos: Record<string, string> = {};
+  let pending = 0;
+  for (const p of people) { const r = known.get(p.key); if (r?.url) photos[p.pid] = r.url; else if (!r || stale(r)) pending++; }
+  return { photos, pending };
+}
+
 // ---------- rota ----------
 function json(body: Any, status = 200, maxAge = 10) {
   return new Response(JSON.stringify(body), {
@@ -429,6 +487,10 @@ Deno.serve(async (req) => {
         return { body: s, ttl: summaryTtl(s) };
       });
       return json(body, 200, body.state === "in" ? 5 : 30);
+    }
+    if (type === "photos") {
+      const ph = await gamePhotos(lg, id);
+      return json(ph, 200, ph.pending ? 0 : 300);
     }
     if (type === "team") {
       const body = await cached(`team:${lg}:${id}`, async () => ({ body: await teamPage(lg, id), ttl: 600 }));

@@ -242,6 +242,16 @@ main { padding-block: 8px calc(var(--nav-h) + 32px); display: flex; flex-directi
 .pline { display: flex; justify-content: space-around; align-items: flex-start; }
 .pl { position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; width: 68px; min-width: 0; }
 .pl .num { position: relative; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .8rem; font-variant-numeric: tabular-nums; border: 2px solid rgba(255,255,255,.85); box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+.pl .num.ph-on { width: 40px; height: 40px; border-width: 2px; background: var(--surface-2); }
+.pl .num img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: center 15%; }
+.pl .num b { font-weight: 800; }
+.pl .num.ph-on b { position: absolute; left: -7px; bottom: -5px; z-index: 1; min-width: 17px; height: 15px; padding: 0 3px; border-radius: 8px; font-size: .6rem; line-height: 15px; text-align: center; background: var(--c); color: var(--ct); box-shadow: 0 1px 2px rgba(0,0,0,.35); }
+.pl .num .bd { z-index: 2; }
+.bench li .ava { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; object-position: center 15%; background: var(--surface-2); }
+.star { flex: none; margin-left: auto; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; cursor: pointer; color: var(--muted); }
+.star[aria-pressed="true"] { color: #e8a400; border-color: #e8a400; background: color-mix(in srgb, #e8a400 12%, var(--surface)); }
+.fav-head h2 svg { color: #e8a400; }
+.fav-note { font-size: .82rem; color: var(--muted); padding: 10px 14px; border-bottom: 1px solid var(--line); }
 .pl .pn { color: #fff; font-size: .7rem; font-weight: 600; max-width: 68px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 2px rgba(0,0,0,.6); }
 .pl .bd { position: absolute; display: flex; gap: 1px; }
 .pl .bd.tr { top: -4px; right: 8px; }
@@ -420,8 +430,27 @@ const ICON = {
   games: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M12 5v14M3 12h4M17 12h4"/></svg>`,
   trophy: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3M12 14v4M8 21h8"/></svg>`,
   search: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>`,
+  star: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z"/></svg>`,
+  starOn: `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z"/></svg>`,
   sub: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20V8M3 12l4-4 4 4" stroke="var(--win)"/><path d="M17 4v12M13 12l4 4 4-4" stroke="var(--loss)"/></svg>`,
 };
+
+// ---------- times favoritos (ficam guardados no próprio celular) ----------
+// No futebol o mesmo time tem o mesmo número em todas as ligas (ex.: Barcelona na La Liga e na Champions).
+const favKey = (lg, id) => `${SPORT[lg] === "soccer" ? "soccer" : lg}:${id}`;
+const favs = {
+  list: store.get("favs", []),
+  keys() { return new Set(this.list.map((f) => f.key)); },
+  has(lg, id) { return this.keys().has(favKey(lg, id)); },
+  toggle(t) {
+    const k = favKey(t.lg, t.id);
+    this.list = this.has(t.lg, t.id) ? this.list.filter((f) => f.key !== k) : [...this.list, { key: k, lg: t.lg, id: t.id, name: t.name, logo: t.logo }];
+    store.set("favs", this.list);
+  },
+};
+function isFavGame(g, keys) {
+  return (g.home_team_id && keys.has(favKey(g.league_id, g.home_team_id))) || (g.away_team_id && keys.has(favKey(g.league_id, g.away_team_id)));
+}
 
 // ESPN manda o status em inglês; aqui vira português.
 function statusOf(g) {
@@ -619,9 +648,25 @@ function viewHome() {
   const chips = [{ id: "all", short_name: "Todos" }, ...leagues].map((l) =>
     `<button class="chip" data-league="${l.id}" aria-pressed="${l.id === state.league}"${l.id !== "all" ? ` style="--c: var(--lg-${l.id})"` : ""}>${l.id !== "all" ? "<i></i>" : ""}${esc(l.short_name)}</button>`).join("");
   const all = [...state.games.values()];
-  const day = all.filter((g) => dayOffsetOf(g.starts_at) === state.day && (state.league === "all" || g.league_id === state.league));
+  const dayAll = all.filter((g) => dayOffsetOf(g.starts_at) === state.day && (state.league === "all" || g.league_id === state.league));
   const rank = { in: 0, pre: 1, post: 2 };
+  const fk = favs.keys();
+  const mine = fk.size ? dayAll.filter((g) => isFavGame(g, fk)) : [];
+  const day = dayAll.filter((g) => !mine.includes(g));
   let out = "";
+  if (fk.size) {
+    let body;
+    if (mine.length) {
+      body = mine.sort((a, b) => (rank[a.state] ?? 1) - (rank[b.state] ?? 1) || a.starts_at.localeCompare(b.starts_at)).map((g) => gameHTML(g)).join("");
+    } else {
+      const from = startOfDay(state.day + 1).toISOString();
+      const next = all.filter((g) => g.state === "pre" && g.starts_at >= from && isFavGame(g, fk)).sort((a, b) => a.starts_at.localeCompare(b.starts_at));
+      const seen = new Set(), firsts = [];
+      for (const g of next) { const k = [g.home_team_id, g.away_team_id].find((id) => fk.has(favKey(g.league_id, id))); if (!seen.has(k)) { seen.add(k); firsts.push(g); } }
+      body = `<div class="fav-note">Seus times não jogam neste dia.${firsts.length ? " Próximos jogos:" : ""}</div>` + firsts.slice(0, 4).map((g) => gameHTML(g, { showDate: true })).join("");
+    }
+    out += `<section class="section"><div class="sec-head fav-head"><h2>${ICON.starOn}Meus times</h2><small>${mine.length ? `${mine.length} jogo${mine.length > 1 ? "s" : ""}` : ""}</small></div><div class="card">${body}</div></section>`;
+  }
   for (const lg of leagues) {
     const gs = day.filter((g) => g.league_id === lg.id)
       .sort((a, b) => (state.day === 0 ? (rank[a.state] ?? 1) - (rank[b.state] ?? 1) : 0) || a.starts_at.localeCompare(b.starts_at));
@@ -633,10 +678,10 @@ function viewHome() {
       <div class="card">${gs.map((g) => gameHTML(g)).join("")}</div>
     </section>`;
   }
-  if (!out) {
-    if (!state.games.size && state.online) out = `<section class="section">${skeleton(4)}</section>`;
-    else if (!state.games.size) out = errorBox("Sem conexão agora. Confira a internet e abra de novo.");
-    else out = `<div class="empty"><strong>Sem jogos${state.league === "all" ? "" : ` de ${esc(leagueOf(state.league).short_name)}`}</strong><span>Escolha outro dia lá em cima.</span></div>`;
+  if (!dayAll.length) {
+    if (!state.games.size && state.online) out += `<section class="section">${skeleton(4)}</section>`;
+    else if (!state.games.size) out += errorBox("Sem conexão agora. Confira a internet e abra de novo.");
+    else out += `<div class="empty"><strong>Sem jogos${state.league === "all" ? "" : ` de ${esc(leagueOf(state.league).short_name)}`}</strong><span>Escolha outro dia lá em cima.</span></div>`;
   }
   const liveAll = all.some((g) => g.state === "in");
   return `<div class="filters" role="toolbar" aria-label="Filtrar campeonato">${chips}</div>
@@ -762,8 +807,9 @@ function viewTeam(lg, id) {
   }
   return {
     title: T.short || T.name,
-    html: `<div class="card"><div class="thero">${logoImg(T.logo, "", 64)}<div><h2>${esc(T.name)}</h2>
-      <p><span class="lgtag" style="--c: var(--lg-${lg})">${esc(L.short_name)}</span>${T.standing ? ` · ${esc(standingPt(T.standing, lg))}` : ""}${T.record ? ` · ${esc(recordPt(T.record, lg))}` : ""}</p></div></div>
+    html: `<div class="card"><div class="thero">${logoImg(T.logo, "", 64)}<div style="flex:1"><h2>${esc(T.name)}</h2>
+      <p><span class="lgtag" style="--c: var(--lg-${lg})">${esc(L.short_name)}</span>${T.standing ? ` · ${esc(standingPt(T.standing, lg))}` : ""}${T.record ? ` · ${esc(recordPt(T.record, lg))}` : ""}</p></div>
+      <button class="star" data-fav="${lg}|${esc(id)}" aria-pressed="${favs.has(lg, id)}" aria-label="${favs.has(lg, id) ? "Deixar de seguir" : "Seguir este time"}">${favs.has(lg, id) ? ICON.starOn : ICON.star}</button></div>
       <div class="tabs" role="tablist">${tabBtn("next", "Próximos", tab)}${tabBtn("past", "Resultados", tab)}${tabBtn("tabela", "Tabela", tab)}</div></div>
       ${body}`,
   };
@@ -781,8 +827,10 @@ function renderResults() {
   const q = norm(state.query.trim());
   const leagues = state.leagues.length ? state.leagues : DEFAULT_LEAGUES;
   if (!q) {
-    box.innerHTML = `<section class="section"><div class="sec-title">Campeonatos</div>${viewLeagues()}</section>
-      <p class="muted" style="font-size:.85rem;margin:0">Digite o nome de um time para ver a agenda, os resultados e a posição na tabela.</p>`;
+    const mineHtml = favs.list.length ? `<section class="section"><div class="sec-title">Meus times</div><div class="card res">${favs.list.map((f) =>
+      `<a href="#/time/${f.lg}/${esc(f.id)}">${logoImg(f.logo, "", 32)}<div style="min-width:0"><b>${esc(f.name)}</b></div><span style="color:#e8a400">${ICON.starOn}</span>${ICON.chev}</a>`).join("")}</div></section>` : "";
+    box.innerHTML = mineHtml + `<section class="section"><div class="sec-title">Campeonatos</div>${viewLeagues()}</section>
+      <p class="muted" style="font-size:.85rem;margin:0">Digite o nome de um time para ver a agenda, os resultados e a posição na tabela. Toque na estrela da página do time para ele aparecer primeiro na tela de Jogos.</p>`;
     return;
   }
   const lgHits = leagues.filter((l) => norm(l.name).includes(q) || norm(l.short_name).includes(q));
@@ -1015,28 +1063,44 @@ function playerMarks(d) {
   }
   return m;
 }
-function plHTML(p, color, marks) {
+const photoCache = new Map();
+function loadPhotos(lg, id, tries = 0) {
+  const k = `${lg}:${id}`;
+  const cur = photoCache.get(k);
+  if (cur && (cur.loading || (!cur.pending && tries === 0))) return;
+  photoCache.set(k, { ...(cur || { photos: {} }), loading: true });
+  fetch(`${API}?type=photos&league=${lg}&id=${id}`).then((r) => r.json()).then((d) => {
+    photoCache.set(k, { photos: d.photos || {}, pending: d.pending || 0, loading: false });
+    rerenderIf("jogo", lg, id);
+    // O serviço de fotos libera ~24 buscas por minuto; o resto vem nas próximas rodadas.
+    if (d.pending && tries < 3) setTimeout(() => { if (route().name === "jogo" && route().args[1] === id) loadPhotos(lg, id, tries + 1); }, 65000);
+  }).catch(() => photoCache.set(k, { ...(cur || { photos: {} }), loading: false }));
+}
+function plHTML(p, color, marks, photo) {
   const mk = marks.get(p.id) || {};
   const name = p.short || lastName(p.n);
   const tl = [...Array(mk.goals || 0)].map(() => `<i class="ball"></i>`).join("") + [...Array(mk.own || 0)].map(() => `<i class="ball own"></i>`).join("");
   const tr = (mk.red ? `<i class="card-r"></i>` : mk.yellow ? `<i class="card-y"></i>` : "") + (mk.out ? `<span class="subo">${esc(String(mk.out).replace("'", ""))}′</span>` : "");
-  return `<div class="pl" title="${esc(p.n)}"><span class="num" style="background:${esc(color)};color:${textOn(color)}">${esc(p.num)}${tl ? `<span class="bd tl">${tl}</span>` : ""}${tr ? `<span class="bd tr">${tr}</span>` : ""}</span><span class="pn">${esc(name)}</span></div>`;
+  const img = photo ? `<img src="${esc(photo)}" alt="" loading="lazy" onerror="this.parentNode.classList.remove('ph-on');this.remove()">` : "";
+  return `<div class="pl" title="${esc(p.n)}"><span class="num${photo ? " ph-on" : ""}" style="--c:${esc(color)};--ct:${textOn(color)};background:${photo ? "var(--surface-2)" : esc(color)};color:${textOn(color)};${photo ? `border-color:${esc(color)}` : ""}">${img}<b>${esc(p.num)}</b>${tl ? `<span class="bd tl">${tl}</span>` : ""}${tr ? `<span class="bd tr">${tr}</span>` : ""}</span><span class="pn">${esc(name)}</span></div>`;
 }
 function lineupsBlock(d) {
   const H = d.lineups.find((l) => l.side === "home"), A = d.lineups.find((l) => l.side === "away");
   if (!H || !A) return `<div class="card"><div class="empty"><span>Escalações ainda não divulgadas. Costumam sair cerca de 1 hora antes do jogo.</span></div></div>`;
   const marks = playerMarks(d);
+  loadPhotos(d.league, d.id);
+  const ph = photoCache.get(`${d.league}:${d.id}`)?.photos || {};
   const colH = H.color || "#d7262e", colA = (A.color && A.color.toLowerCase() !== colH.toLowerCase()) ? A.color : "#ffffff";
   const awayLines = lineupLines(A).map((l) => l.slice().reverse()); // visitante ataca para baixo: espelha esquerda/direita
   const homeLines = lineupLines(H).reverse();                        // mandante: goleiro embaixo
   const th = sideTeam(d, "home"), ta = sideTeam(d, "away");
-  const benchList = (L) => L.bench.map((p) => { const mk = marks.get(p.id) || {}; return `<li><span class="n">${esc(p.num)}</span><span>${esc(p.n)}</span>${mk.in ? `<span class="in">▲ ${esc(mk.in)}</span>` : "<span></span>"}</li>`; }).join("");
+  const benchList = (L) => L.bench.map((p) => { const mk = marks.get(p.id) || {}; return `<li>${ph[p.id] ? `<img class="ava" src="${esc(ph[p.id])}" alt="" loading="lazy">` : `<span class="n">${esc(p.num)}</span>`}<span>${ph[p.id] ? `<b class="muted" style="font-weight:700">${esc(p.num)}</b> ` : ""}${esc(p.n)}</span>${mk.in ? `<span class="in">▲ ${esc(mk.in)}</span>` : "<span></span>"}</li>`; }).join("");
   return `<div class="card pad lineup-card">
     <div class="form-tag"><span>${logoImg(ta.logo, "logo", 22)}${esc(ta.short || ta.name)}</span><em>${esc(A.formation || "")}</em></div>
     <div class="pitch">
       <span class="mid"></span><span class="circle"></span><span class="box t"></span><span class="box b"></span>
-      <div class="half">${awayLines.map((l) => `<div class="pline">${l.map((p) => plHTML(p, colA, marks)).join("")}</div>`).join("")}</div>
-      <div class="half">${homeLines.map((l) => `<div class="pline">${l.map((p) => plHTML(p, colH, marks)).join("")}</div>`).join("")}</div>
+      <div class="half">${awayLines.map((l) => `<div class="pline">${l.map((p) => plHTML(p, colA, marks, ph[p.id])).join("")}</div>`).join("")}</div>
+      <div class="half">${homeLines.map((l) => `<div class="pline">${l.map((p) => plHTML(p, colH, marks, ph[p.id])).join("")}</div>`).join("")}</div>
     </div>
     <div class="form-tag"><span>${logoImg(th.logo, "logo", 22)}${esc(th.short || th.name)}</span><em>${esc(H.formation || "")}</em></div></div>
     <section class="section"><div class="sec-title">Reservas</div><div class="card pad bench">
@@ -1146,6 +1210,13 @@ document.addEventListener("click", (e) => {
   if (day) { state.day = Number(day.dataset.day); render(); return; }
   const chip = t.closest(".chip[data-league]");
   if (chip) { state.league = chip.dataset.league; store.set("league", state.league); render(); return; }
+  const star = t.closest("[data-fav]");
+  if (star) {
+    const [lg, id] = star.dataset.fav.split("|");
+    const T = peek({ type: "team", league: lg, id })?.team || {};
+    favs.toggle({ lg, id, name: T.name || T.short || "Time", logo: T.logo || null });
+    render(); return;
+  }
   const tab = t.closest(".tab[data-tab]");
   if (tab) { const r = route(); const key = r.name === "liga" ? `liga:${r.args[0]}` : `${r.name}:${r.args[0]}:${r.args[1]}`; state.tabs[key] = tab.dataset.tab; render(); return; }
   const seg = t.closest("[data-seg]");
