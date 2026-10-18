@@ -53,6 +53,16 @@ def blocks(h):
     return out
 
 
+def team_full_names(b):
+    """Nome completo (atributo title do link), ex.: "BetBoom Team" para "BB"."""
+    out = []
+    for m in re.finditer(r'class="name"[^>]*>\s*<a[^>]*title="([^"]+)"', b):
+        t = html.unescape(m.group(1)).strip()
+        if t and (not out or out[-1] != t):
+            out.append(t)
+    return out[:2]
+
+
 def team_names(b):
     names = []
     # formato antigo: <span class="team-template-text"><a ... title="FURIA">FURIA</a>
@@ -74,7 +84,7 @@ def team_names(b):
 
 def team_logos(b):
     logos = []
-    for m in re.finditer(r'class="team-template-image[^"]*"[^>]*>.*?<img[^>]+src="([^"]+)"', b, re.S):
+    for m in re.finditer(r'class="team-template-image[^"]*"[^>]*>.*?<img[^>]+src="([^"]+)"', b, re.S):  # antigo e novo
         src = m.group(1)
         logos.append(src if src.startswith("http") else "https://liquipedia.net" + src)
     out = []
@@ -111,9 +121,13 @@ def parse_match(b):
     if not finished and score and bo and not live and ts < time.time() - 3600 and max(score) > int(bo.group(1)) // 2:
         finished = True
     streams = []
-    for p, ch in re.findall(r'data-stream-([a-z]+)="([^"]+)"', b):
+    for p, ch in re.findall(r'data-stream-([a-z]+)="([^"]+)"', b) + re.findall(r'href="/counterstrike/Special:Stream/([a-z]+)/([^"]+)"', b):
+        ch = urllib.parse.unquote(html.unescape(ch))
         if ch and (p, ch) not in streams:
             streams.append((p, ch))
+    icon = re.search(r'league-icon-small-image lightmode.*?<img[^>]+src="([^"]+)"', b, re.S)
+    icon = (icon.group(1) if icon.group(1).startswith("http") else "https://liquipedia.net" + icon.group(1)) if icon else None
+    full = team_full_names(b)
     logos = team_logos(b)
     now = time.time()
     state = "in" if live else ("post" if finished else ("pre" if ts > now - 300 else ("in" if ts > now - 6 * 3600 else "post")))
@@ -122,9 +136,10 @@ def parse_match(b):
         "id": mid,
         "ts": ts,
         "state": state,
-        "teams": [{"name": names[i], "logo": logos[i] if i < len(logos) else None, "score": score[i] if score else None} for i in range(2)],
+        "teams": [{"name": names[i], "full": full[i] if i < len(full) else names[i], "logo": logos[i] if i < len(logos) else None, "score": score[i] if score else None} for i in range(2)],
         "bestof": int(bo.group(1)) if bo else None,
         "tournament": tournament,
+        "tournament_icon": icon,
         "streams": [{"platform": p, "channel": ch} for p, ch in streams][:8],
     }
 
@@ -139,7 +154,8 @@ def main():
                 old[m["id"]] = m
         except Exception:
             pass
-    pages = ["Liquipedia:Matches", f"{TEAM}/Results"]
+    # A página de partidas traz as próximas, as ao vivo e as encerradas recentes.
+    pages = ["Liquipedia:Matches"]
     for i, page in enumerate(pages):
         if i:
             time.sleep(31)  # regra da Liquipedia: 1 parse a cada 30 s

@@ -45,6 +45,7 @@
   --lg-ger1: #a0174f;
   --lg-fra1: #0e8a74;
   --lg-ucl: #1c3a8a;
+  --lg-cs2: #9a7b14;
   --lg-nba: #c9462a;
   --lg-nfl: #0b5aa8;
   --shadow: 0 1px 2px rgba(15, 21, 32, .06), 0 4px 14px rgba(15, 21, 32, .05);
@@ -63,7 +64,7 @@
     --live: #ff4d55; --live-soft: #3a1418; --flash: #4a3f12;
     --win: #3dcc7c; --draw: #7d879a; --loss: #ff5a61; --yellow: #f5cd2a;
     --pitch: #1d5a37; --pitch-2: #1a5232; --pitch-line: rgba(255, 255, 255, .3);
-    --lg-bra1: #3dcc7c; --lg-epl: #b98ae6; --lg-esp1: #f2a54a; --lg-ita1: #55c1e0; --lg-ger1: #e679a6; --lg-fra1: #45d1b4; --lg-ucl: #7f9cf0; --lg-nba: #ff8a66; --lg-nfl: #64a8f0;
+    --lg-bra1: #3dcc7c; --lg-epl: #b98ae6; --lg-esp1: #f2a54a; --lg-ita1: #55c1e0; --lg-ger1: #e679a6; --lg-fra1: #45d1b4; --lg-ucl: #7f9cf0; --lg-cs2: #e8c547; --lg-nba: #ff8a66; --lg-nfl: #64a8f0;
     --shadow: none;
     color-scheme: dark;
   }
@@ -74,7 +75,7 @@
   --live: #ff4d55; --live-soft: #3a1418; --flash: #4a3f12;
   --win: #3dcc7c; --draw: #7d879a; --loss: #ff5a61; --yellow: #f5cd2a;
   --pitch: #1d5a37; --pitch-2: #1a5232; --pitch-line: rgba(255, 255, 255, .3);
-  --lg-bra1: #3dcc7c; --lg-epl: #b98ae6; --lg-esp1: #f2a54a; --lg-ita1: #55c1e0; --lg-ger1: #e679a6; --lg-fra1: #45d1b4; --lg-ucl: #7f9cf0; --lg-nba: #ff8a66; --lg-nfl: #64a8f0;
+  --lg-bra1: #3dcc7c; --lg-epl: #b98ae6; --lg-esp1: #f2a54a; --lg-ita1: #55c1e0; --lg-ger1: #e679a6; --lg-fra1: #45d1b4; --lg-ucl: #7f9cf0; --lg-cs2: #e8c547; --lg-nba: #ff8a66; --lg-nfl: #64a8f0;
   --shadow: none;
   color-scheme: dark;
 }
@@ -160,6 +161,8 @@ main { padding-block: 8px calc(var(--nav-h) + 32px); display: flex; flex-directi
 .st .t { font-family: var(--f-display); font-stretch: 80%; font-weight: 800; font-size: 1.15rem; line-height: 1; }
 .st .s { white-space: nowrap; font-size: .7rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
 .st.live .t { color: var(--live); font-size: 1rem; }
+.st .t { white-space: nowrap; }
+.st.live .t.sm { font-size: .82rem; }
 .st.live .s { color: var(--live); display: inline-flex; align-items: center; gap: 5px; }
 .st.live .dot { width: 6px; height: 6px; }
 .st.post .t { color: var(--muted); font-size: .95rem; }
@@ -362,8 +365,8 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const API = SUPABASE_URL + "/functions/v1/espn";
 const COLS = "id,league_id,starts_at,state,status_detail,clock,period,home_name,home_short,home_logo,home_score,home_team_id,away_name,away_short,away_logo,away_score,away_team_id,venue,channels_override,updated_at";
 const DAY = 86400000;
-const SPORT = { bra1: "soccer", epl: "soccer", esp1: "soccer", ita1: "soccer", ger1: "soccer", fra1: "soccer", ucl: "soccer", nba: "basketball", nfl: "football" };
-const BADGE = { bra1: "BRA", epl: "PL", esp1: "ESP", ita1: "ITA", ger1: "ALE", fra1: "FRA", ucl: "UCL", nba: "NBA", nfl: "NFL" };
+const SPORT = { bra1: "soccer", epl: "soccer", esp1: "soccer", ita1: "soccer", ger1: "soccer", fra1: "soccer", ucl: "soccer", nba: "basketball", nfl: "football", cs2: "esports" };
+const BADGE = { bra1: "BRA", epl: "PL", esp1: "ESP", ita1: "ITA", ger1: "ALE", fra1: "FRA", ucl: "UCL", nba: "NBA", nfl: "NFL", cs2: "CS2" };
 const DEFAULT_LEAGUES = [
   { id: "bra1", name: "Brasileirão Série A", short_name: "Brasileirão", sort: 1 },
   { id: "epl", name: "Premier League", short_name: "Premier League", sort: 2 },
@@ -375,6 +378,12 @@ const DEFAULT_LEAGUES = [
   { id: "nba", name: "NBA", short_name: "NBA", sort: 8 },
   { id: "nfl", name: "NFL", short_name: "NFL", sort: 9 },
 ];
+// CS2 não vem da ESPN: vem do arquivo data/cs2.json, atualizado pela rotina do GitHub (dados da Liquipedia).
+const EXTRA_LEAGUES = [{ id: "cs2", name: "CS2 · FURIA", short_name: "FURIA (CS2)", sort: 10, channels: "Gaules e transmissões oficiais (Twitch e YouTube)" }];
+function leagueList() {
+  const base = state.leagues.length ? state.leagues : DEFAULT_LEAGUES;
+  return [...base, ...EXTRA_LEAGUES.filter((x) => !base.some((l) => l.id === x.id))];
+}
 
 const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
@@ -416,7 +425,7 @@ function fullDate(iso) {
 }
 function esc(s) { return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 const isUS = (lg) => lg === "nba" || lg === "nfl";
-const leagueOf = (id) => state.leagues.find((l) => l.id === id) || DEFAULT_LEAGUES.find((l) => l.id === id) || { id, name: id, short_name: id };
+const leagueOf = (id) => leagueList().find((l) => l.id === id) || { id, name: id, short_name: id };
 const norm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 function logoImg(src, cls = "logo", size = 24) { return src ? `<img class="${cls}" src="${esc(src)}" alt="" loading="lazy" width="${size}" height="${size}">` : `<i class="ph"></i>`; }
 function textOn(hex) {
@@ -456,6 +465,11 @@ function isFavGame(g, keys) {
 function statusOf(g) {
   const d = (g.status_detail || "").toLowerCase();
   const soccer = SPORT[g.league_id] === "soccer";
+  if (SPORT[g.league_id] === "esports") {
+    if (g.state === "post") return { kind: "post", t: "Fim", s: g.status_detail || "" };
+    if (g.state === "in") return { kind: "live", t: "Ao vivo", s: g.status_detail || "" };
+    return { kind: "pre", t: fmtTime.format(new Date(g.starts_at)), s: g.status_detail || "" };
+  }
   if (/postpon/.test(d)) return { kind: "off", t: "Adiado", s: "" };
   if (/cancel/.test(d)) return { kind: "off", t: "Cancel.", s: "" };
   if (/suspend|delay/.test(d)) return { kind: "live", t: "Parado", s: "Ao vivo" };
@@ -498,15 +512,56 @@ function noteChange(prev, g) {
   if (h || a) bumps.set(g.id, { at: Date.now(), home: h, away: a });
 }
 let leaguesLoadedAt = 0;
+state.cs2 = [];
+function streamName(s) {
+  const pl = { twitch: "Twitch", youtube: "YouTube", kick: "Kick", afreeca: "AfreecaTV", trovo: "Trovo" }[s.platform] || s.platform;
+  return `${s.channel.replace(/_/g, " ")} (${pl})`;
+}
+function streamUrl(s) {
+  const c = encodeURIComponent(s.channel);
+  if (s.platform === "twitch") return `https://www.twitch.tv/${c}`;
+  if (s.platform === "kick") return `https://kick.com/${c}`;
+  if (s.platform === "youtube") return /^UC[\w-]{20,}$/.test(s.channel) ? `https://www.youtube.com/channel/${c}` : `https://www.youtube.com/@${c}`;
+  return null;
+}
+// Gaules primeiro: é onde a maioria assiste a FURIA no Brasil.
+const sortStreams = (list) => (list || []).slice().sort((a, b) => (/gaules/i.test(b.channel) ? 1 : 0) - (/gaules/i.test(a.channel) ? 1 : 0));
+function cs2Row(m) {
+  const [A, B] = m.teams;
+  const sc = (t) => (t.score == null || m.state === "pre" ? null : String(t.score));
+  return {
+    id: `cs2:${m.id}`, league_id: "cs2", starts_at: new Date(m.ts * 1000).toISOString(), state: m.state,
+    status_detail: m.bestof ? `MD${m.bestof}` : "", clock: null, period: null,
+    home_name: A.full || A.name, home_short: A.name, home_logo: A.logo, home_score: sc(A), home_team_id: norm(A.name),
+    away_name: B.full || B.name, away_short: B.name, away_logo: B.logo, away_score: sc(B), away_team_id: norm(B.name),
+    channels_override: m.streams?.length ? sortStreams(m.streams).slice(0, 3).map(streamName).join(", ") : null,
+    tournament: m.tournament, cs2: m,
+  };
+}
+function mergeCs2() {
+  for (const k of [...state.games.keys()]) if (k.startsWith("cs2:")) state.games.delete(k);
+  for (const m of state.cs2) { const r = cs2Row(m); noteChange(state.games.get(r.id), r); state.games.set(r.id, r); }
+}
+async function loadCs2() {
+  try {
+    const r = await fetch(`data/cs2.json?t=${Math.floor(Date.now() / 60000)}`, { cache: "no-store" });
+    if (!r.ok) return;
+    const d = await r.json();
+    state.cs2 = d.matches || [];
+    state.cs2Updated = d.updated || null;
+    mergeCs2();
+  } catch {}
+}
 async function refresh() {
   if (!sb) return;
   try {
     // Confere a lista de campeonatos a cada abertura (e de hora em hora), para campeonato novo aparecer sem precisar limpar nada.
     if (!leaguesLoadedAt || Date.now() - leaguesLoadedAt > 3600e3) { await loadLeagues(); leaguesLoadedAt = Date.now(); }
     await loadGames();
+    await loadCs2();
     state.online = true;
-  } catch { state.online = false; }
-  if (["home", "ligas"].includes(route().name)) render();
+  } catch { state.online = false; mergeCs2(); }
+  if (["home", "ligas"].includes(route().name) || (route().name === "liga" && route().args[0] === "cs2") || route().name === "cs2") render();
 }
 
 const apiCache = new Map();
@@ -553,7 +608,7 @@ window.addEventListener("hashchange", () => {
 function goBack() { if (navigatedInside && history.length > 1) history.back(); else location.hash = "#/"; }
 
 // ---------- peças reutilizadas ----------
-function gameLink(g) { const [lg, id] = g.id.split(":"); return `#/jogo/${lg}/${id}`; }
+function gameLink(g) { const [lg, id] = g.id.split(":"); return lg === "cs2" ? `#/cs2/${id}` : `#/jogo/${lg}/${id}`; }
 function teamRow(g, side, st) {
   const name = g[side + "_short"] || g[side + "_name"] || "A definir";
   const sc = g[side + "_score"];
@@ -576,10 +631,11 @@ function gameHTML(g, opts = {}) {
     : st.s ? `<span class="s">${esc(st.s)}</span>`
     : opts.showDate ? `<span class="s">${esc(fmtDay.format(new Date(g.starts_at)))}</span>` : "";
   return `<a class="game${flash ? " flash" : ""}" href="${gameLink(g)}">
-    <div class="st ${st.kind}"><span class="t">${esc(st.t)}</span>${sub}</div>
+    <div class="st ${st.kind}"><span class="t${st.t.length > 6 ? " sm" : ""}">${esc(st.t)}</span>${sub}</div>
     <div class="teams">${teamRow(g, sides[0], st)}${teamRow(g, sides[1], st)}</div>
     ${ICON.chev}
-    ${g.channels_override ? `<div class="tvline"><span class="tag">TV</span><span>${esc(g.channels_override)}</span></div>` : ""}
+    ${g.tournament ? `<div class="tvline"><span class="tag">${esc(g.status_detail || "CS2")}</span><span>${esc(g.tournament)}</span></div>` : ""}
+    ${g.channels_override ? `<div class="tvline"><span class="tag">${g.league_id === "cs2" ? "Live" : "TV"}</span><span>${esc(g.channels_override)}</span></div>` : ""}
   </a>`;
 }
 // Converte um jogo da agenda do time (servidor) no mesmo formato da tabela de jogos.
@@ -644,7 +700,7 @@ function daysHTML() {
   return html;
 }
 function viewHome() {
-  const leagues = state.leagues.length ? state.leagues : DEFAULT_LEAGUES;
+  const leagues = leagueList();
   const chips = [{ id: "all", short_name: "Todos" }, ...leagues].map((l) =>
     `<button class="chip" data-league="${l.id}" aria-pressed="${l.id === state.league}"${l.id !== "all" ? ` style="--c: var(--lg-${l.id})"` : ""}>${l.id !== "all" ? "<i></i>" : ""}${esc(l.short_name)}</button>`).join("");
   const all = [...state.games.values()];
@@ -693,7 +749,7 @@ function viewHome() {
 
 // ---------- tela: campeonatos ----------
 function viewLeagues() {
-  const leagues = state.leagues.length ? state.leagues : DEFAULT_LEAGUES;
+  const leagues = leagueList();
   const todayCount = (id) => [...state.games.values()].filter((g) => g.league_id === id && dayOffsetOf(g.starts_at) === 0).length;
   return `<div class="card lg-list">${leagues.map((l) => {
     const n = todayCount(l.id);
@@ -710,6 +766,7 @@ async function leagueGames(lg) {
 }
 const lgGamesCache = new Map();
 function viewLeague(lg) {
+  if (lg === "cs2") return viewCs2League();
   const L = leagueOf(lg);
   const tab = state.tabs["liga:" + lg] || "jogos";
   const seg = state.seg["liga:" + lg] || "next";
@@ -775,6 +832,63 @@ function standingsBlock(lg, mine) {
   }).join("");
 }
 
+// ---------- CS2: partida e lista ----------
+function cs2Lists() {
+  const rows = state.cs2.map(cs2Row);
+  return {
+    next: rows.filter((g) => g.state !== "post").sort((a, b) => a.starts_at.localeCompare(b.starts_at)),
+    past: rows.filter((g) => g.state === "post").sort((a, b) => b.starts_at.localeCompare(a.starts_at)),
+  };
+}
+function cs2Credit() {
+  return `<p class="muted" style="font-size:.75rem;margin:0;text-align:center">Dados: <a href="https://liquipedia.net/counterstrike/FURIA" target="_blank" rel="noopener" style="text-decoration:underline">Liquipedia</a> (CC-BY-SA) · atualiza a cada ~10 min${state.cs2Updated ? ` · última às ${fmtTime.format(new Date(state.cs2Updated))}` : ""}</p>`;
+}
+function viewCs2League() {
+  const tab = state.tabs["liga:cs2"] || "next";
+  const { next, past } = cs2Lists();
+  const list = tab === "next" ? next : past;
+  const furia = state.cs2.flatMap((m) => m.teams).find((t) => /^furia$/i.test(t.name));
+  const fav = favs.has("cs2", "furia");
+  const body = !state.cs2.length ? skeleton(3)
+    : list.length ? `<div class="card">${listByDate(list, tab === "past")}</div>`
+    : `<div class="empty"><strong>Nada por aqui</strong><span>${tab === "next" ? "Sem partidas marcadas ainda. Elas aparecem assim que o campeonato divulga." : "Sem resultados recentes."}</span></div>`;
+  return `<div class="card"><div class="thero" style="--c: var(--lg-cs2)">${furia?.logo ? logoImg(furia.logo, "", 64) : `<span class="lgbadge">CS2</span>`}<div style="flex:1"><h2>FURIA</h2><p>Counter-Strike 2 · partidas, placar e onde assistir</p></div>
+      <button class="star" data-fav="cs2|furia" aria-pressed="${fav}" aria-label="${fav ? "Deixar de seguir" : "Seguir a FURIA"}">${fav ? ICON.starOn : ICON.star}</button></div>
+    <div class="tabs" role="tablist">${tabBtn("next", "Próximas", tab)}${tabBtn("past", "Resultados", tab)}</div></div>
+    ${body}${cs2Credit()}`;
+}
+function viewCs2Match(id) {
+  const m = state.cs2.find((x) => x.id === id);
+  if (!m) return { title: "CS2", html: state.cs2.length ? errorBox("Partida não encontrada. Ela pode ter saído da agenda.") : skeleton(3) };
+  const g = cs2Row(m);
+  const [A, B] = m.teams;
+  const st = statusOf(g);
+  const start = new Date(g.starts_at);
+  const teamBox = (t) => `<div class="hteam">${logoImg(t.logo, "", 56)}<b>${esc(t.full || t.name)}</b></div>`;
+  const mid = g.state === "pre"
+    ? `<span class="when">${fmtTime.format(start)}</span><span class="stline">${esc(dayLabel(g.starts_at))}</span>`
+    : `<span class="big">${esc(A.score ?? 0)}<span class="x">-</span>${esc(B.score ?? 0)}</span><span class="stline ${st.kind === "live" ? "live" : ""}">${st.kind === "live" ? `<i class="dot"></i>Ao vivo` : "Encerrado"}</span>`;
+  const streams = sortStreams(m.streams);
+  const { next, past } = cs2Lists();
+  const others = [...next, ...past].filter((x) => x.id !== g.id).slice(0, 6);
+  return {
+    title: "CS2",
+    html: `<div class="card"><div class="hero"><div class="hero-grid">${teamBox(A)}<div class="hscore">${mid}</div>${teamBox(B)}</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:.85rem;color:var(--muted);text-align:center">${m.tournament_icon ? logoImg(m.tournament_icon, "logo", 22) : ""}<span>${esc(m.tournament || "")}${m.bestof ? ` · Melhor de ${m.bestof}` : ""}</span></div></div></div>
+      <section class="section"><div class="sec-title">Onde assistir</div><div class="card">${streams.length ? `<div class="res">${streams.map((s) => {
+        const u = streamUrl(s);
+        return `<a ${u ? `href="${esc(u)}" target="_blank" rel="noopener"` : ""}><span class="lgbadge" style="width:32px;height:32px;border-radius:9px;background:${s.platform === "twitch" ? "#9146ff" : s.platform === "youtube" ? "#e62117" : "#53fc18"};display:grid;place-items:center;color:#fff;font-size:.6rem;font-weight:900">${esc(s.platform.slice(0, 2).toUpperCase())}</span><div style="min-width:0"><b>${esc(s.channel.replace(/_/g, " "))}</b><small>${esc(streamName(s).replace(/^.*\(/, "").replace(")", ""))}</small></div><span></span>${ICON.chev}</a>`;
+      }).join("")}</div>` : `<div class="pad muted" style="font-size:.88rem">Transmissões ainda não divulgadas. A FURIA costuma passar no Gaules (Twitch e YouTube) e no canal oficial do campeonato.</div>`}</div></section>
+      <section class="section"><div class="sec-title">Informações</div><div class="card"><dl class="info">
+        <dt>Data</dt><dd>${esc(fullDate(g.starts_at))}</dd>
+        <dt>Campeonato</dt><dd>${esc(m.tournament || "—")}</dd>
+        ${m.bestof ? `<dt>Formato</dt><dd>Melhor de ${m.bestof} mapas</dd>` : ""}
+      </dl></div></section>
+      ${others.length ? `<section class="section"><div class="sec-head"><a href="#/liga/cs2"><h2>Outras partidas da FURIA</h2>${ICON.chev}</a></div><div class="card">${others.map((x) => gameHTML(x, { showDate: true })).join("")}</div></section>` : ""}
+      ${cs2Credit()}`,
+  };
+}
+
 // ---------- tela: time ----------
 function standingPt(s, lg) {
   const m = /^(\d+)\w*\s+in\s+(.+)$/i.exec(s || "");
@@ -825,10 +939,10 @@ function viewSearch() {
 function renderResults() {
   const box = $("results"); if (!box) return;
   const q = norm(state.query.trim());
-  const leagues = state.leagues.length ? state.leagues : DEFAULT_LEAGUES;
+  const leagues = leagueList();
   if (!q) {
     const mineHtml = favs.list.length ? `<section class="section"><div class="sec-title">Meus times</div><div class="card res">${favs.list.map((f) =>
-      `<a href="#/time/${f.lg}/${esc(f.id)}">${logoImg(f.logo, "", 32)}<div style="min-width:0"><b>${esc(f.name)}</b></div><span style="color:#e8a400">${ICON.starOn}</span>${ICON.chev}</a>`).join("")}</div></section>` : "";
+      `<a href="${f.lg === "cs2" ? "#/liga/cs2" : `#/time/${f.lg}/${esc(f.id)}`}">${logoImg(f.logo, "", 32)}<div style="min-width:0"><b>${esc(f.name)}</b></div><span style="color:#e8a400">${ICON.starOn}</span>${ICON.chev}</a>`).join("")}</div></section>` : "";
     box.innerHTML = mineHtml + `<section class="section"><div class="sec-title">Campeonatos</div>${viewLeagues()}</section>
       <p class="muted" style="font-size:.85rem;margin:0">Digite o nome de um time para ver a agenda, os resultados e a posição na tabela. Toque na estrela da página do time para ele aparecer primeiro na tela de Jogos.</p>`;
     return;
@@ -843,12 +957,13 @@ function renderResults() {
     if (n.includes(q) || s.includes(q)) return 3;
     return 9;
   };
-  const hits = teamsCache.map((t) => ({ t, s: score(t) })).filter((x) => x.s < 9).sort((a, b) => a.s - b.s || a.t.name.localeCompare(b.t.name)).slice(0, 40);
+  const furia = { id: "furia", league: "cs2", name: "FURIA (CS2)", short: "FURIA", abbr: "FUR", logo: state.cs2.flatMap((m) => m.teams).find((t) => /^furia$/i.test(t.name))?.logo || null };
+  const hits = [...teamsCache, furia].map((t) => ({ t, s: score(t) })).filter((x) => x.s < 9).sort((a, b) => a.s - b.s || a.t.name.localeCompare(b.t.name)).slice(0, 40);
   let html = "";
   if (lgHits.length) html += `<section class="section"><div class="sec-title">Campeonatos</div><div class="card res">${lgHits.map((l) =>
     `<a href="#/liga/${l.id}" style="--c: var(--lg-${l.id})"><span class="lgbadge" style="width:32px;height:32px;border-radius:9px;background:var(--c);display:grid;place-items:center;color:#fff;font-size:.62rem;font-weight:900">${BADGE[l.id]}</span><div style="min-width:0"><b>${esc(l.name)}</b></div><span></span>${ICON.chev}</a>`).join("")}</div></section>`;
   if (hits.length) html += `<section class="section"><div class="sec-title">Times</div><div class="card res">${hits.map(({ t }) =>
-    `<a href="#/time/${t.league}/${esc(t.id)}">${logoImg(t.logo, "", 32)}<div style="min-width:0"><b>${esc(t.name)}</b></div><span class="lgtag" style="--c: var(--lg-${t.league})">${esc(leagueOf(t.league).short_name)}</span>${ICON.chev}</a>`).join("")}</div></section>`;
+    `<a href="${t.league === "cs2" ? "#/liga/cs2" : `#/time/${t.league}/${esc(t.id)}`}">${logoImg(t.logo, "", 32)}<div style="min-width:0"><b>${esc(t.name)}</b></div><span class="lgtag" style="--c: var(--lg-${t.league})">${esc(leagueOf(t.league).short_name)}</span>${ICON.chev}</a>`).join("")}</div></section>`;
   if (!html) html = `<div class="empty"><strong>Nada encontrado</strong><span>Confira a grafia. A busca cobre os times de todos os campeonatos do app.</span></div>`;
   box.innerHTML = html;
 }
@@ -1176,6 +1291,7 @@ function render(routeChanged) {
   else if (r.name === "busca") html = viewSearch();
   else if (r.name === "liga" && SPORT[r.args[0]]) { title = leagueOf(r.args[0]).short_name; html = viewLeague(r.args[0]); }
   else if (r.name === "time" && SPORT[r.args[0]] && /^\d+$/.test(r.args[1] || "")) { const v = viewTeam(r.args[0], r.args[1]); title = v.title; html = v.html; }
+  else if (r.name === "cs2" && /^[0-9a-f]{6,16}$/.test(r.args[0] || "")) { const v = viewCs2Match(r.args[0]); title = v.title; html = v.html; }
   else if (r.name === "jogo" && SPORT[r.args[0]] && /^\d+$/.test(r.args[1] || "")) { const v = viewGame(r.args[0], r.args[1]); title = v.title; html = v.html; setupGameTimer(r.args[0], r.args[1]); }
   else { location.replace("#/"); return; }
   renderTop(r, title);
@@ -1213,7 +1329,7 @@ document.addEventListener("click", (e) => {
   const star = t.closest("[data-fav]");
   if (star) {
     const [lg, id] = star.dataset.fav.split("|");
-    const T = peek({ type: "team", league: lg, id })?.team || {};
+    const T = lg === "cs2" ? (state.cs2.flatMap((m) => m.teams).find((t) => norm(t.name) === id) || { name: "FURIA" }) : (peek({ type: "team", league: lg, id })?.team || {});
     favs.toggle({ lg, id, name: T.name || T.short || "Time", logo: T.logo || null });
     render(); return;
   }
