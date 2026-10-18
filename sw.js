@@ -1,5 +1,5 @@
 // Guarda a casca do app para abrir rápido e sem internet. Os jogos vêm sempre da rede.
-const CACHE = "jogos-v1";
+const CACHE = "jogos-v2";
 const ARQUIVOS = ["./", "index.html", "manifest.webmanifest", "icon.svg", "apple-touch-icon.png", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", (e) => {
