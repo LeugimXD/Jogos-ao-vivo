@@ -71,7 +71,53 @@
    "tournament": "Thunderpick World Champ. '26 - Playoffs",
    "tournament_icon": "https://liquipedia.net/commons/images/thumb/e/e5/Thunderpick_World_Championship_2025_icon_lightmode.png/50px-Thunderpick_World_Championship_2025_icon_lightmode.png",
    "streams": []
+  },
+  {
+   "id": "ed1eed65df",
+   "ts": 1792338900,
+   "state": "post",
+   "teams": [
+    {
+     "name": "BB",
+     "full": "BetBoom Team",
+     "logo": "https://liquipedia.net/commons/images/thumb/5/5b/BetBoom_Team_2024_allmode.png/56px-BetBoom_Team_2024_allmode.png",
+     "score": 2
+    },
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/51px-FURIA_Esports_allmode.png",
+     "score": 3
+    }
+   ],
+   "bestof": 5,
+   "tournament": "Thunderpick World Champ. '26 - Playoffs",
+   "tournament_icon": "https://liquipedia.net/commons/images/thumb/e/e5/Thunderpick_World_Championship_2025_icon_lightmode.png/50px-Thunderpick_World_Championship_2025_icon_lightmode.png",
+   "streams": []
+  },
+  {
+   "id": "99df410e6e",
+   "ts": 1792857600,
+   "state": "pre",
+   "teams": [
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/51px-FURIA_Esports_allmode.png",
+     "score": null
+    },
+    {
+     "name": "DENDELE",
+     "full": "DENDELE CS",
+     "logo": "https://liquipedia.net/commons/images/thumb/8/87/DENDELE_CS_allmode.png/38px-DENDELE_CS_allmode.png",
+     "score": null
+    }
+   ],
+   "bestof": 3,
+   "tournament": "PGL Masters Bucharest 2026 - Round 1",
+   "tournament_icon": "https://liquipedia.net/commons/images/thumb/8/8c/PGL_Masters_Bucharest_2026_icon_lightmode.png/50px-PGL_Masters_Bucharest_2026_icon_lightmode.png",
+   "streams": []
   }
  ],
- "updated": "2026-10-19T04:38:15+00:00"
+ "updated": "2026-10-19T05:15:16+00:00"
 }
