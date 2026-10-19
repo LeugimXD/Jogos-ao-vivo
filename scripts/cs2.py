@@ -162,6 +162,38 @@ def parse_match(b):
     }
 
 
+LOGOS = os.path.join(os.path.dirname(__file__), "..", "data", "logos")
+
+
+def local_image(url):
+    """Baixa a imagem uma vez e devolve o caminho relativo (data/logos/...). Já local: devolve igual."""
+    if not url or not url.startswith("http"):
+        return url
+    # pede uma versão maior (100 px) do mesmo arquivo, para ficar nítido no celular
+    big = re.sub(r"/(\d+)px-", "/100px-", url)
+    ext = os.path.splitext(urllib.parse.urlparse(big).path)[1].lower() or ".png"
+    name = hashlib.sha1(url.encode()).hexdigest()[:16] + ext
+    path = os.path.join(LOGOS, name)
+    if not os.path.exists(path):
+        os.makedirs(LOGOS, exist_ok=True)
+        for src in (big, url):
+            try:
+                req = urllib.request.Request(src, headers={"User-Agent": UA})
+                with urllib.request.urlopen(req, timeout=20) as r:
+                    data = r.read()
+                if data:
+                    open(path, "wb").write(data)
+                    break
+            except Exception:
+                time.sleep(2)
+                continue
+            finally:
+                time.sleep(2)  # regra da Liquipedia: no máximo 1 pedido a cada 2 s
+        if not os.path.exists(path):
+            return url
+    return f"data/logos/{name}"
+
+
 def main():
     debug = []
     matches = {}
@@ -180,8 +212,10 @@ def main():
         try:
             h = parse_page(page)
         except Exception as e:
-            debug.append(f"== {page}: ERRO {e}")
-            continue
+            # Liquipedia recusou (ex.: excesso de pedidos vindo do servidor compartilhado do GitHub):
+            # não mexe no arquivo; tenta de novo na próxima rodada.
+            print(f"{page}: {e} - mantendo os dados anteriores")
+            return 0
         bl = blocks(h)
         debug.append(f"== {page}: {len(h)} caracteres, {len(bl)} blocos, FURIA aparece {h.count(TEAM)} vezes")
         found = 0
@@ -200,6 +234,11 @@ def main():
     for mid, m in old.items():
         if mid not in matches and m.get("state") == "post" and m["ts"] > time.time() - 60 * 86400:
             matches[mid] = m
+    # Escudos e ícones baixados para dentro do app (a Liquipedia não deixa outros sites exibirem as imagens dela).
+    for m in matches.values():
+        for t in m["teams"]:
+            t["logo"] = local_image(t.get("logo"))
+        m["tournament_icon"] = local_image(m.get("tournament_icon"))
     ordered = sorted(matches.values(), key=lambda m: m["ts"])
     payload = {"source": "Liquipedia", "license": "CC-BY-SA 3.0", "team": TEAM, "matches": ordered}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
