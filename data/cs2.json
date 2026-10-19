@@ -11,20 +11,21 @@
     {
      "name": "FURIA",
      "full": "FURIA",
-     "logo": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/51px-FURIA_Esports_allmode.png",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
      "score": 2
     },
     {
      "name": "BB",
      "full": "BetBoom Team",
-     "logo": "https://liquipedia.net/commons/images/thumb/5/5b/BetBoom_Team_2024_allmode.png/56px-BetBoom_Team_2024_allmode.png",
+     "logo": "data/logos/de68816641006caa.png",
      "score": 0
     }
    ],
    "bestof": 3,
    "tournament": "Thunderpick World Champ. '26 - Group B",
-   "tournament_icon": "https://liquipedia.net/commons/images/thumb/e/e5/Thunderpick_World_Championship_2025_icon_lightmode.png/50px-Thunderpick_World_Championship_2025_icon_lightmode.png",
-   "streams": []
+   "tournament_icon": "data/logos/0b2b745ca724f7d1.png",
+   "streams": [],
+   "links": []
   },
   {
    "id": "9530beec93",
@@ -34,20 +35,21 @@
     {
      "name": "Legacy",
      "full": "Legacy",
-     "logo": "https://liquipedia.net/commons/images/thumb/3/34/Legacy_allmode.png/49px-Legacy_allmode.png",
+     "logo": "data/logos/9628299281fe149a.png",
      "score": 1
     },
     {
      "name": "FURIA",
      "full": "FURIA",
-     "logo": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/51px-FURIA_Esports_allmode.png",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
      "score": 2
     }
    ],
    "bestof": 3,
    "tournament": "Thunderpick World Champ. '26 - Group B",
-   "tournament_icon": "https://liquipedia.net/commons/images/thumb/e/e5/Thunderpick_World_Championship_2025_icon_lightmode.png/50px-Thunderpick_World_Championship_2025_icon_lightmode.png",
-   "streams": []
+   "tournament_icon": "data/logos/0b2b745ca724f7d1.png",
+   "streams": [],
+   "links": []
   },
   {
    "id": "bf48171411",
@@ -57,20 +59,21 @@
     {
      "name": "Aurora",
      "full": "Aurora Gaming",
-     "logo": "https://liquipedia.net/commons/images/thumb/1/1c/Aurora_Gaming_2025_allmode.png/50px-Aurora_Gaming_2025_allmode.png",
+     "logo": "data/logos/192e499e1d949c37.png",
      "score": 0
     },
     {
      "name": "FURIA",
      "full": "FURIA",
-     "logo": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/51px-FURIA_Esports_allmode.png",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
      "score": 2
     }
    ],
    "bestof": 3,
    "tournament": "Thunderpick World Champ. '26 - Playoffs",
-   "tournament_icon": "https://liquipedia.net/commons/images/thumb/e/e5/Thunderpick_World_Championship_2025_icon_lightmode.png/50px-Thunderpick_World_Championship_2025_icon_lightmode.png",
-   "streams": []
+   "tournament_icon": "data/logos/0b2b745ca724f7d1.png",
+   "streams": [],
+   "links": []
   },
   {
    "id": "ed1eed65df",
@@ -80,21 +83,46 @@
     {
      "name": "BB",
      "full": "BetBoom Team",
-     "logo": "https://liquipedia.net/commons/images/thumb/5/5b/BetBoom_Team_2024_allmode.png/56px-BetBoom_Team_2024_allmode.png",
+     "logo": "data/logos/de68816641006caa.png",
      "score": 2
     },
     {
      "name": "FURIA",
      "full": "FURIA",
-     "logo": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/51px-FURIA_Esports_allmode.png",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
      "score": 3
     }
    ],
    "bestof": 5,
    "tournament": "Thunderpick World Champ. '26 - Playoffs",
-   "tournament_icon": "https://liquipedia.net/commons/images/thumb/e/e5/Thunderpick_World_Championship_2025_icon_lightmode.png/50px-Thunderpick_World_Championship_2025_icon_lightmode.png",
-   "streams": []
+   "tournament_icon": "data/logos/0b2b745ca724f7d1.png",
+   "streams": [],
+   "links": []
+  },
+  {
+   "id": "99df410e6e",
+   "ts": 1792857600,
+   "state": "pre",
+   "teams": [
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": null
+    },
+    {
+     "name": "DENDELE",
+     "full": "DENDELE CS",
+     "logo": "data/logos/0295cd1ddd916349.png",
+     "score": null
+    }
+   ],
+   "bestof": 3,
+   "tournament": "PGL Masters Bucharest 2026 - Round 1",
+   "tournament_icon": "data/logos/2d3442d1fd01daec.png",
+   "streams": [],
+   "links": []
   }
  ],
- "updated": "2026-10-19T11:50:11+00:00"
+ "updated": "2026-10-19T11:52:42+00:00"
 }
