@@ -125,6 +125,13 @@ def parse_match(b):
         ch = urllib.parse.unquote(html.unescape(ch))
         if ch and (p, ch) not in streams:
             streams.append((p, ch))
+    links = []
+    lk = re.search(r'class="match-info-links"(.*)', b, re.S)
+    for href in re.findall(r'href="([^"]+)"', lk.group(1) if lk else ""):
+        href = html.unescape(href)
+        href = href if href.startswith("http") else "https://liquipedia.net" + href
+        if href not in links:
+            links.append(href)
     icon = re.search(r'league-icon-small-image lightmode.*?<img[^>]+src="([^"]+)"', b, re.S)
     icon = (icon.group(1) if icon.group(1).startswith("http") else "https://liquipedia.net" + icon.group(1)) if icon else None
     full = team_full_names(b)
@@ -151,6 +158,7 @@ def parse_match(b):
         "tournament": tournament,
         "tournament_icon": icon,
         "streams": [{"platform": p, "channel": ch} for p, ch in streams][:8],
+        "links": [l for l in links if "Special:Stream" not in l][:10],
     }
 
 
@@ -182,6 +190,8 @@ def main():
             if m:
                 matches[m["id"]] = m
                 found += 1
+                if found <= 2:
+                    debug.append("---- bloco da FURIA ----\n" + b[:9000])
         debug.append(f"   partidas da FURIA lidas: {found}")
         k = h.find(TEAM)
         if k >= 0:
