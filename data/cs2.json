@@ -122,7 +122,31 @@
    "tournament_icon": "data/logos/2d3442d1fd01daec.png",
    "streams": [],
    "links": []
+  },
+  {
+   "id": "e61749021c",
+   "ts": 1794362400,
+   "state": "pre",
+   "teams": [
+    {
+     "name": "Legacy",
+     "full": "Legacy",
+     "logo": "data/logos/9628299281fe149a.png",
+     "score": null
+    },
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": null
+    }
+   ],
+   "bestof": 3,
+   "tournament": "BLAST Rivals Fall 2026 - Group A",
+   "tournament_icon": null,
+   "streams": [],
+   "links": []
   }
  ],
- "updated": "2026-10-19T11:52:42+00:00"
+ "updated": "2026-10-20T13:21:55+00:00"
 }
