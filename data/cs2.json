@@ -100,21 +100,21 @@
    "links": []
   },
   {
-   "id": "99df410e6e",
-   "ts": 1792857600,
+   "id": "2801fb7639",
+   "ts": 1792858200,
    "state": "in",
    "teams": [
     {
      "name": "FURIA",
      "full": "FURIA",
      "logo": "data/logos/dafa9f6edf0df99a.png",
-     "score": null
+     "score": 1
     },
     {
      "name": "DENDELE",
      "full": "DENDELE CS",
      "logo": "data/logos/0295cd1ddd916349.png",
-     "score": null
+     "score": 0
     }
    ],
    "bestof": 3,
@@ -161,5 +161,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-24T17:29:01+00:00"
+ "updated": "2026-10-24T19:42:28+00:00"
 }
