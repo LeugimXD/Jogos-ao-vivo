@@ -102,7 +102,7 @@
   {
    "id": "99df410e6e",
    "ts": 1792857600,
-   "state": "pre",
+   "state": "in",
    "teams": [
     {
      "name": "FURIA",
@@ -120,7 +120,20 @@
    "bestof": 3,
    "tournament": "PGL Masters Bucharest 2026 - Round 1",
    "tournament_icon": "data/logos/2d3442d1fd01daec.png",
-   "streams": [],
+   "streams": [
+    {
+     "platform": "twitch",
+     "channel": "PGL_CS2"
+    },
+    {
+     "platform": "youtube",
+     "channel": "PGL/AI0JhqZGfv4"
+    },
+    {
+     "platform": "kick",
+     "channel": "PGL_CS2"
+    }
+   ],
    "links": []
   },
   {
@@ -148,5 +161,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-23T06:07:55+00:00"
+ "updated": "2026-10-24T17:29:01+00:00"
 }
