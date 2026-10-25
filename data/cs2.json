@@ -127,27 +127,40 @@
    ]
   },
   {
-   "id": "55fe3f3922",
-   "ts": 1792947600,
-   "state": "pre",
+   "id": "afd3a299c7",
+   "ts": 1792943100,
+   "state": "in",
    "teams": [
     {
      "name": "FURIA",
      "full": "FURIA",
      "logo": "data/logos/dafa9f6edf0df99a.png",
-     "score": null
+     "score": 0
     },
     {
      "name": "NAVI",
      "full": "Natus Vincere",
      "logo": "data/logos/6c65d28aa6bacf0f.png",
-     "score": null
+     "score": 1
     }
    ],
    "bestof": 3,
    "tournament": "PGL Masters Bucharest 2026 - Round 2",
    "tournament_icon": "data/logos/2d3442d1fd01daec.png",
-   "streams": [],
+   "streams": [
+    {
+     "platform": "twitch",
+     "channel": "PGL"
+    },
+    {
+     "platform": "youtube",
+     "channel": "PGL/UPqJb2tI09k"
+    },
+    {
+     "platform": "kick",
+     "channel": "PGL"
+    }
+   ],
    "links": []
   },
   {
@@ -175,5 +188,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-25T04:34:40+00:00"
+ "updated": "2026-10-25T17:16:28+00:00"
 }
