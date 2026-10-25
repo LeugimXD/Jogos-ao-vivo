@@ -121,7 +121,10 @@
    "tournament": "PGL Masters Bucharest 2026 - Round 1",
    "tournament_icon": "data/logos/2d3442d1fd01daec.png",
    "streams": [],
-   "links": []
+   "links": [
+    "https://youtu.be/733vAELdEVc?t=32",
+    "https://youtu.be/733vAELdEVc?t=2489"
+   ]
   },
   {
    "id": "55fe3f3922",
@@ -172,5 +175,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-24T21:57:41+00:00"
+ "updated": "2026-10-25T04:34:40+00:00"
 }
