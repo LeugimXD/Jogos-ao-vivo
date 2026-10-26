@@ -129,7 +129,7 @@
   {
    "id": "afd3a299c7",
    "ts": 1792943100,
-   "state": "in",
+   "state": "post",
    "teams": [
     {
      "name": "FURIA",
@@ -141,26 +141,40 @@
      "name": "NAVI",
      "full": "Natus Vincere",
      "logo": "data/logos/6c65d28aa6bacf0f.png",
-     "score": 1
+     "score": 2
     }
    ],
    "bestof": 3,
    "tournament": "PGL Masters Bucharest 2026 - Round 2",
    "tournament_icon": "data/logos/2d3442d1fd01daec.png",
-   "streams": [
+   "streams": [],
+   "links": [
+    "https://youtu.be/O_w8uZZIJRo?t=38",
+    "https://youtu.be/O_w8uZZIJRo?t=2897"
+   ]
+  },
+  {
+   "id": "ed895c11d7",
+   "ts": 1793023200,
+   "state": "pre",
+   "teams": [
     {
-     "platform": "twitch",
-     "channel": "PGL"
+     "name": "Spirit",
+     "full": "Team Spirit",
+     "logo": "data/logos/8c4274b6e3dc87de.png",
+     "score": null
     },
     {
-     "platform": "youtube",
-     "channel": "PGL/UPqJb2tI09k"
-    },
-    {
-     "platform": "kick",
-     "channel": "PGL"
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/ab12d6d1226ffba8.png",
+     "score": null
     }
    ],
+   "bestof": 3,
+   "tournament": "PGL Masters Bucharest 2026 - Round 3",
+   "tournament_icon": "data/logos/2d3442d1fd01daec.png",
+   "streams": [],
    "links": []
   },
   {
@@ -188,5 +202,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-25T17:16:28+00:00"
+ "updated": "2026-10-26T00:16:12+00:00"
 }
