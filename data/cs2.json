@@ -156,38 +156,53 @@
   {
    "id": "6f6d468f2d",
    "ts": 1793022000,
-   "state": "in",
+   "state": "post",
    "teams": [
     {
      "name": "Spirit",
      "full": "Team Spirit",
      "logo": "data/logos/8c4274b6e3dc87de.png",
-     "score": 0
+     "score": 2
     },
     {
      "name": "FURIA",
      "full": "FURIA",
      "logo": "data/logos/ab12d6d1226ffba8.png",
-     "score": 0
+     "score": 1
     }
    ],
    "bestof": 3,
    "tournament": "PGL Masters Bucharest 2026 - Round 3",
    "tournament_icon": "data/logos/2d3442d1fd01daec.png",
-   "streams": [
+   "streams": [],
+   "links": [
+    "https://youtu.be/YwF-Dqki9Xw?t=29",
+    "https://youtu.be/YwF-Dqki9Xw?t=3154",
+    "https://youtu.be/YwF-Dqki9Xw?t=5607"
+   ]
+  },
+  {
+   "id": "26dba0f2c0",
+   "ts": 1793120400,
+   "state": "pre",
+   "teams": [
     {
-     "platform": "twitch",
-     "channel": "PGL"
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": null
     },
     {
-     "platform": "youtube",
-     "channel": "PGL/ZTdOeOvsv2E"
-    },
-    {
-     "platform": "kick",
-     "channel": "PGL"
+     "name": "TYLOO",
+     "full": "TYLOO",
+     "logo": "data/logos/9aad8f6006dbe09d.png",
+     "score": null
     }
    ],
+   "bestof": 3,
+   "tournament": "PGL Masters Bucharest 2026 - Round 4",
+   "tournament_icon": "data/logos/2d3442d1fd01daec.png",
+   "streams": [],
    "links": []
   },
   {
@@ -215,5 +230,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-26T17:07:29+00:00"
+ "updated": "2026-10-26T21:37:54+00:00"
 }
