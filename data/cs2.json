@@ -182,8 +182,35 @@
    ]
   },
   {
-   "id": "26dba0f2c0",
-   "ts": 1793120400,
+   "id": "c141d2838c",
+   "ts": 1793117700,
+   "state": "post",
+   "teams": [
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": 2
+    },
+    {
+     "name": "TYLOO",
+     "full": "TYLOO",
+     "logo": "data/logos/9aad8f6006dbe09d.png",
+     "score": 0
+    }
+   ],
+   "bestof": 3,
+   "tournament": "PGL Masters Bucharest 2026 - Round 4",
+   "tournament_icon": "data/logos/2d3442d1fd01daec.png",
+   "streams": [],
+   "links": [
+    "https://youtu.be/0GbSsxAXFoM?t=26",
+    "https://youtu.be/0GbSsxAXFoM?t=2442"
+   ]
+  },
+  {
+   "id": "dbd7a5a513",
+   "ts": 1793196000,
    "state": "pre",
    "teams": [
     {
@@ -193,14 +220,14 @@
      "score": null
     },
     {
-     "name": "TYLOO",
-     "full": "TYLOO",
-     "logo": "data/logos/9aad8f6006dbe09d.png",
+     "name": "Liquid",
+     "full": "Team Liquid",
+     "logo": "data/logos/d1dceef82d570a3b.png",
      "score": null
     }
    ],
    "bestof": 3,
-   "tournament": "PGL Masters Bucharest 2026 - Round 4",
+   "tournament": "PGL Masters Bucharest 2026 - Round 5",
    "tournament_icon": "data/logos/2d3442d1fd01daec.png",
    "streams": [],
    "links": []
@@ -230,5 +257,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-26T21:37:54+00:00"
+ "updated": "2026-10-27T20:56:39+00:00"
 }
