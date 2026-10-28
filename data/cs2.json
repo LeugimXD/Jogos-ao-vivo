@@ -236,6 +236,30 @@
    ]
   },
   {
+   "id": "56e49c90d2",
+   "ts": 1793293200,
+   "state": "pre",
+   "teams": [
+    {
+     "name": "BB",
+     "full": "BetBoom Team",
+     "logo": "data/logos/de68816641006caa.png",
+     "score": null
+    },
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": null
+    }
+   ],
+   "bestof": 3,
+   "tournament": "PGL Masters Bucharest 2026 - Playoffs",
+   "tournament_icon": "data/logos/2d3442d1fd01daec.png",
+   "streams": [],
+   "links": []
+  },
+  {
    "id": "bdb2f4e651",
    "ts": 1794366000,
    "state": "pre",
@@ -260,5 +284,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-28T18:19:28+00:00"
+ "updated": "2026-10-28T22:43:05+00:00"
 }
