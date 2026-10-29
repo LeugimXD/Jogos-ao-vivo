@@ -236,8 +236,8 @@
    ]
   },
   {
-   "id": "56e49c90d2",
-   "ts": 1793293200,
+   "id": "fc44c8610b",
+   "ts": 1793287200,
    "state": "pre",
    "teams": [
     {
@@ -256,7 +256,20 @@
    "bestof": 3,
    "tournament": "PGL Masters Bucharest 2026 - Playoffs",
    "tournament_icon": "data/logos/2d3442d1fd01daec.png",
-   "streams": [],
+   "streams": [
+    {
+     "platform": "twitch",
+     "channel": "PGL"
+    },
+    {
+     "platform": "youtube",
+     "channel": "PGL"
+    },
+    {
+     "platform": "kick",
+     "channel": "PGL"
+    }
+   ],
    "links": []
   },
   {
@@ -284,5 +297,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-28T22:43:05+00:00"
+ "updated": "2026-10-29T15:16:50+00:00"
 }
