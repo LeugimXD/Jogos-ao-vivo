@@ -238,38 +238,52 @@
   {
    "id": "fc44c8610b",
    "ts": 1793287200,
-   "state": "pre",
+   "state": "post",
    "teams": [
     {
      "name": "BB",
      "full": "BetBoom Team",
      "logo": "data/logos/de68816641006caa.png",
-     "score": null
+     "score": 0
     },
     {
      "name": "FURIA",
      "full": "FURIA",
      "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": 2
+    }
+   ],
+   "bestof": 3,
+   "tournament": "PGL Masters Bucharest 2026 - Playoffs",
+   "tournament_icon": "data/logos/2d3442d1fd01daec.png",
+   "streams": [],
+   "links": [
+    "https://youtu.be/l93dicm_y8s?t=35",
+    "https://youtu.be/l93dicm_y8s?t=3861"
+   ]
+  },
+  {
+   "id": "4143506e1e",
+   "ts": 1793372400,
+   "state": "pre",
+   "teams": [
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": null
+    },
+    {
+     "name": "MOUZ",
+     "full": "MOUZ",
+     "logo": "data/logos/6ad278c67e07fd7e.png",
      "score": null
     }
    ],
    "bestof": 3,
    "tournament": "PGL Masters Bucharest 2026 - Playoffs",
    "tournament_icon": "data/logos/2d3442d1fd01daec.png",
-   "streams": [
-    {
-     "platform": "twitch",
-     "channel": "PGL"
-    },
-    {
-     "platform": "youtube",
-     "channel": "PGL"
-    },
-    {
-     "platform": "kick",
-     "channel": "PGL"
-    }
-   ],
+   "streams": [],
    "links": []
   },
   {
@@ -297,5 +311,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-29T15:16:50+00:00"
+ "updated": "2026-10-29T20:21:30+00:00"
 }
