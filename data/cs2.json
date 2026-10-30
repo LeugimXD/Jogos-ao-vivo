@@ -265,7 +265,31 @@
   {
    "id": "4143506e1e",
    "ts": 1793372400,
-   "state": "in",
+   "state": "post",
+   "teams": [
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": 2
+    },
+    {
+     "name": "MOUZ",
+     "full": "MOUZ",
+     "logo": "data/logos/6ad278c67e07fd7e.png",
+     "score": 1
+    }
+   ],
+   "bestof": 3,
+   "tournament": "PGL Masters Bucharest 2026 - Playoffs",
+   "tournament_icon": "data/logos/2d3442d1fd01daec.png",
+   "streams": [],
+   "links": []
+  },
+  {
+   "id": "9ee6dd9677",
+   "ts": 1793444400,
+   "state": "pre",
    "teams": [
     {
      "name": "FURIA",
@@ -274,15 +298,39 @@
      "score": null
     },
     {
-     "name": "MOUZ",
-     "full": "MOUZ",
-     "logo": "data/logos/6ad278c67e07fd7e.png",
+     "name": "Nemiga",
+     "full": "Nemiga Gaming",
+     "logo": "data/logos/4c9c5db2fef92495.png",
+     "score": null
+    }
+   ],
+   "bestof": 5,
+   "tournament": "PGL Masters Bucharest 2026 - Playoffs",
+   "tournament_icon": "data/logos/2d3442d1fd01daec.png",
+   "streams": [],
+   "links": []
+  },
+  {
+   "id": "c131764815",
+   "ts": 1793602800,
+   "state": "pre",
+   "teams": [
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": null
+    },
+    {
+     "name": "FaZe",
+     "full": "FaZe Clan",
+     "logo": "data/logos/7e4e31fa8a786de0.png",
      "score": null
     }
    ],
    "bestof": 3,
-   "tournament": "PGL Masters Bucharest 2026 - Playoffs",
-   "tournament_icon": "data/logos/2d3442d1fd01daec.png",
+   "tournament": "IEM Beijing 2026 - Group A",
+   "tournament_icon": null,
    "streams": [],
    "links": []
   },
@@ -311,5 +359,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-30T17:10:28+00:00"
+ "updated": "2026-10-30T21:33:41+00:00"
 }
