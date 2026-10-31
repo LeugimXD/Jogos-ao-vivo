@@ -293,38 +293,25 @@
   {
    "id": "9ee6dd9677",
    "ts": 1793444400,
-   "state": "in",
+   "state": "post",
    "teams": [
     {
      "name": "FURIA",
      "full": "FURIA",
      "logo": "data/logos/dafa9f6edf0df99a.png",
-     "score": 1
+     "score": 3
     },
     {
      "name": "Nemiga",
      "full": "Nemiga Gaming",
      "logo": "data/logos/4c9c5db2fef92495.png",
-     "score": 1
+     "score": 2
     }
    ],
    "bestof": 5,
    "tournament": "PGL Masters Bucharest 2026 - Playoffs",
    "tournament_icon": "data/logos/2d3442d1fd01daec.png",
-   "streams": [
-    {
-     "platform": "twitch",
-     "channel": "PGL"
-    },
-    {
-     "platform": "youtube",
-     "channel": "PGL"
-    },
-    {
-     "platform": "kick",
-     "channel": "PGL"
-    }
-   ],
+   "streams": [],
    "links": []
   },
   {
@@ -376,5 +363,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-31T13:21:35+00:00"
+ "updated": "2026-10-31T17:51:40+00:00"
 }
