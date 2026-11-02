@@ -315,43 +315,6 @@
    "links": []
   },
   {
-   "id": "c131764815",
-   "ts": 1793602800,
-   "state": "in",
-   "teams": [
-    {
-     "name": "FURIA",
-     "full": "FURIA",
-     "logo": "data/logos/dafa9f6edf0df99a.png",
-     "score": null
-    },
-    {
-     "name": "FaZe",
-     "full": "FaZe Clan",
-     "logo": "data/logos/7e4e31fa8a786de0.png",
-     "score": null
-    }
-   ],
-   "bestof": 3,
-   "tournament": "IEM Beijing 2026 - Group A",
-   "tournament_icon": null,
-   "streams": [
-    {
-     "platform": "twitch",
-     "channel": "ESL_Counter-Strike"
-    },
-    {
-     "platform": "youtube",
-     "channel": "ESL_CS/WjkcbItqZTg"
-    },
-    {
-     "platform": "kick",
-     "channel": "ESL_Counter-Strike"
-    }
-   ],
-   "links": []
-  },
-  {
    "id": "bdb2f4e651",
    "ts": 1794366000,
    "state": "pre",
@@ -376,5 +339,5 @@
    "links": []
   }
  ],
- "updated": "2026-11-02T07:37:30+00:00"
+ "updated": "2026-11-02T23:58:45+00:00"
 }
