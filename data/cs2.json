@@ -317,7 +317,7 @@
   {
    "id": "c131764815",
    "ts": 1793602800,
-   "state": "pre",
+   "state": "in",
    "teams": [
     {
      "name": "FURIA",
@@ -335,7 +335,20 @@
    "bestof": 3,
    "tournament": "IEM Beijing 2026 - Group A",
    "tournament_icon": null,
-   "streams": [],
+   "streams": [
+    {
+     "platform": "twitch",
+     "channel": "ESL_Counter-Strike"
+    },
+    {
+     "platform": "youtube",
+     "channel": "ESL_CS/WjkcbItqZTg"
+    },
+    {
+     "platform": "kick",
+     "channel": "ESL_Counter-Strike"
+    }
+   ],
    "links": []
   },
   {
@@ -363,5 +376,5 @@
    "links": []
   }
  ],
- "updated": "2026-10-31T17:51:40+00:00"
+ "updated": "2026-11-02T07:37:30+00:00"
 }
