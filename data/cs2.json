@@ -315,8 +315,84 @@
    "links": []
   },
   {
-   "id": "bdb2f4e651",
-   "ts": 1794366000,
+   "id": "19a165e3c0",
+   "ts": 1793609400,
+   "state": "post",
+   "teams": [
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": 2
+    },
+    {
+     "name": "FaZe",
+     "full": "FaZe Clan",
+     "logo": "data/logos/7e4e31fa8a786de0.png",
+     "score": 1
+    }
+   ],
+   "bestof": 3,
+   "tournament": "IEM Beijing 2026 - Group A",
+   "tournament_icon": null,
+   "streams": [],
+   "links": [
+    "https://youtu.be/JuP9R4l0r6A?t=28",
+    "https://youtu.be/JuP9R4l0r6A?t=2855",
+    "https://youtu.be/JuP9R4l0r6A?t=5325"
+   ]
+  },
+  {
+   "id": "f7ab85514b",
+   "ts": 1793700900,
+   "state": "post",
+   "teams": [
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": 2
+    },
+    {
+     "name": "NAVI",
+     "full": "Natus Vincere",
+     "logo": "data/logos/6c65d28aa6bacf0f.png",
+     "score": 1
+    }
+   ],
+   "bestof": 3,
+   "tournament": "IEM Beijing 2026 - Group A",
+   "tournament_icon": null,
+   "streams": [],
+   "links": []
+  },
+  {
+   "id": "fac94a3839",
+   "ts": 1793784600,
+   "state": "pre",
+   "teams": [
+    {
+     "name": "MongolZ",
+     "full": "The MongolZ",
+     "logo": "data/logos/644d7f277ac09df9.png",
+     "score": null
+    },
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": null
+    }
+   ],
+   "bestof": 3,
+   "tournament": "IEM Beijing 2026 - Group A",
+   "tournament_icon": null,
+   "streams": [],
+   "links": []
+  },
+  {
+   "id": "e61749021c",
+   "ts": 1794362400,
    "state": "pre",
    "teams": [
     {
@@ -339,5 +415,5 @@
    "links": []
   }
  ],
- "updated": "2026-11-02T23:58:45+00:00"
+ "updated": "2026-11-03T14:31:21+00:00"
 }
