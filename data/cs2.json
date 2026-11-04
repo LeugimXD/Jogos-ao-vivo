@@ -373,23 +373,51 @@
   {
    "id": "fac94a3839",
    "ts": 1793784600,
-   "state": "pre",
+   "state": "post",
    "teams": [
     {
      "name": "MongolZ",
      "full": "The MongolZ",
      "logo": "data/logos/644d7f277ac09df9.png",
-     "score": null
+     "score": 2
     },
     {
      "name": "FURIA",
      "full": "FURIA",
      "logo": "data/logos/dafa9f6edf0df99a.png",
-     "score": null
+     "score": 1
     }
    ],
    "bestof": 3,
    "tournament": "IEM Beijing 2026 - Group A",
+   "tournament_icon": null,
+   "streams": [],
+   "links": [
+    "https://youtu.be/lW4fo1YSfCA?t=33",
+    "https://youtu.be/lW4fo1YSfCA?t=3304",
+    "https://youtu.be/lW4fo1YSfCA?t=6067"
+   ]
+  },
+  {
+   "id": "ad413f91bb",
+   "ts": 1793958300,
+   "state": "pre",
+   "teams": [
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": null
+    },
+    {
+     "name": "BB",
+     "full": "BetBoom Team",
+     "logo": "data/logos/de68816641006caa.png",
+     "score": null
+    }
+   ],
+   "bestof": 3,
+   "tournament": "IEM Beijing 2026 - Playoffs",
    "tournament_icon": null,
    "streams": [],
    "links": []
@@ -419,5 +447,5 @@
    "links": []
   }
  ],
- "updated": "2026-11-04T07:14:42+00:00"
+ "updated": "2026-11-04T15:30:15+00:00"
 }
