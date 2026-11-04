@@ -364,7 +364,11 @@
    "tournament": "IEM Beijing 2026 - Group A",
    "tournament_icon": null,
    "streams": [],
-   "links": []
+   "links": [
+    "https://youtu.be/4nDGR_8igIY?t=26",
+    "https://youtu.be/4nDGR_8igIY?t=3799",
+    "https://youtu.be/4nDGR_8igIY?t=7647"
+   ]
   },
   {
    "id": "fac94a3839",
@@ -415,5 +419,5 @@
    "links": []
   }
  ],
- "updated": "2026-11-03T14:31:21+00:00"
+ "updated": "2026-11-04T07:14:42+00:00"
 }
