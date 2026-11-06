@@ -399,21 +399,21 @@
    ]
   },
   {
-   "id": "ad413f91bb",
-   "ts": 1793958300,
-   "state": "in",
+   "id": "20f3bdffc8",
+   "ts": 1793962800,
+   "state": "post",
    "teams": [
     {
      "name": "FURIA",
      "full": "FURIA",
      "logo": "data/logos/dafa9f6edf0df99a.png",
-     "score": null
+     "score": 1
     },
     {
      "name": "BB",
      "full": "BetBoom Team",
      "logo": "data/logos/de68816641006caa.png",
-     "score": null
+     "score": 2
     }
    ],
    "bestof": 3,
@@ -447,5 +447,5 @@
    "links": []
   }
  ],
- "updated": "2026-11-06T09:56:01+00:00"
+ "updated": "2026-11-06T22:09:40+00:00"
 }
