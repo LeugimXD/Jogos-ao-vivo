@@ -420,7 +420,11 @@
    "tournament": "IEM Beijing 2026 - Playoffs",
    "tournament_icon": null,
    "streams": [],
-   "links": []
+   "links": [
+    "https://youtu.be/lwjvtUp-ets?t=27",
+    "https://youtu.be/lwjvtUp-ets?t=2353",
+    "https://youtu.be/lwjvtUp-ets?t=5688"
+   ]
   },
   {
    "id": "e61749021c",
@@ -447,5 +451,5 @@
    "links": []
   }
  ],
- "updated": "2026-11-06T22:09:40+00:00"
+ "updated": "2026-11-07T14:56:58+00:00"
 }
