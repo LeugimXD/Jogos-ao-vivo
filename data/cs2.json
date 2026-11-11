@@ -448,10 +448,13 @@
    "tournament": "BLAST Rivals Fall 2026 - Group A",
    "tournament_icon": null,
    "streams": [],
-   "links": []
+   "links": [
+    "https://youtu.be/O-Fs7ZVTffY?t=30",
+    "https://youtu.be/O-Fs7ZVTffY?t=3792"
+   ]
   },
   {
-   "id": "c96538b202",
+   "id": "2fa5754972",
    "ts": 1794457800,
    "state": "pre",
    "teams": [
@@ -462,9 +465,9 @@
      "score": null
     },
     {
-     "name": "TBD",
-     "full": "TBD",
-     "logo": "data/logos/a571ddcb0680d677.png",
+     "name": "Vitality",
+     "full": "Team Vitality",
+     "logo": "data/logos/04889b36b1d2b6ad.png",
      "score": null
     }
    ],
@@ -475,5 +478,5 @@
    "links": []
   }
  ],
- "updated": "2026-11-11T04:40:56+00:00"
+ "updated": "2026-11-11T12:13:51+00:00"
 }
