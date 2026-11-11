@@ -429,18 +429,42 @@
   {
    "id": "e61749021c",
    "ts": 1794362400,
-   "state": "pre",
+   "state": "post",
    "teams": [
     {
      "name": "Legacy",
      "full": "Legacy",
      "logo": "data/logos/9628299281fe149a.png",
-     "score": null
+     "score": 0
     },
     {
      "name": "FURIA",
      "full": "FURIA",
      "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": 2
+    }
+   ],
+   "bestof": 3,
+   "tournament": "BLAST Rivals Fall 2026 - Group A",
+   "tournament_icon": null,
+   "streams": [],
+   "links": []
+  },
+  {
+   "id": "c96538b202",
+   "ts": 1794457800,
+   "state": "pre",
+   "teams": [
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": null
+    },
+    {
+     "name": "TBD",
+     "full": "TBD",
+     "logo": "data/logos/a571ddcb0680d677.png",
      "score": null
     }
    ],
@@ -451,5 +475,5 @@
    "links": []
   }
  ],
- "updated": "2026-11-07T14:56:58+00:00"
+ "updated": "2026-11-11T04:40:56+00:00"
 }
