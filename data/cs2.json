@@ -456,40 +456,55 @@
   {
    "id": "277b80ce7a",
    "ts": 1794456000,
-   "state": "in",
+   "state": "post",
    "teams": [
     {
      "name": "FURIA",
      "full": "FURIA",
      "logo": "data/logos/dafa9f6edf0df99a.png",
-     "score": 0
+     "score": 2
     },
     {
      "name": "Vitality",
      "full": "Team Vitality",
      "logo": "data/logos/04889b36b1d2b6ad.png",
-     "score": 0
+     "score": 1
     }
    ],
    "bestof": 3,
    "tournament": "BLAST Rivals Fall 2026 - Group A",
    "tournament_icon": null,
-   "streams": [
+   "streams": [],
+   "links": [
+    "https://youtu.be/e-HPF_4rGIw?t=25",
+    "https://youtu.be/e-HPF_4rGIw?t=2477",
+    "https://youtu.be/e-HPF_4rGIw?t=5623"
+   ]
+  },
+  {
+   "id": "5bedcc18ce",
+   "ts": 1794652200,
+   "state": "pre",
+   "teams": [
     {
-     "platform": "twitch",
-     "channel": "BLAST_Premier"
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": null
     },
     {
-     "platform": "youtube",
-     "channel": "BLAST_Premier"
-    },
-    {
-     "platform": "kick",
-     "channel": "BLAST_Premier"
+     "name": "TBD",
+     "full": "TBD",
+     "logo": "data/logos/a571ddcb0680d677.png",
+     "score": null
     }
    ],
+   "bestof": 3,
+   "tournament": "BLAST Rivals Fall 2026 - Playoffs",
+   "tournament_icon": null,
+   "streams": [],
    "links": []
   }
  ],
- "updated": "2026-11-12T08:52:16+00:00"
+ "updated": "2026-11-12T17:20:46+00:00"
 }
