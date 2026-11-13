@@ -482,7 +482,7 @@
    ]
   },
   {
-   "id": "5bedcc18ce",
+   "id": "8a0fc401a2",
    "ts": 1794652200,
    "state": "pre",
    "teams": [
@@ -493,9 +493,9 @@
      "score": null
     },
     {
-     "name": "TBD",
-     "full": "TBD",
-     "logo": "data/logos/a571ddcb0680d677.png",
+     "name": "Falcons",
+     "full": "Team Falcons",
+     "logo": "data/logos/ffc4fafd2b3d3a96.png",
      "score": null
     }
    ],
@@ -506,5 +506,5 @@
    "links": []
   }
  ],
- "updated": "2026-11-12T17:20:46+00:00"
+ "updated": "2026-11-13T18:09:42+00:00"
 }
