@@ -503,7 +503,10 @@
    "tournament": "BLAST Rivals Fall 2026 - Playoffs",
    "tournament_icon": null,
    "streams": [],
-   "links": []
+   "links": [
+    "https://youtu.be/JT6x45W302k?t=22",
+    "https://youtu.be/JT6x45W302k?t=5120"
+   ]
   },
   {
    "id": "410f53ed9e",
@@ -530,5 +533,5 @@
    "links": []
   }
  ],
- "updated": "2026-11-14T16:50:41+00:00"
+ "updated": "2026-11-14T21:05:29+00:00"
 }
