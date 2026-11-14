@@ -484,7 +484,31 @@
   {
    "id": "2421eef0cb",
    "ts": 1794652500,
-   "state": "in",
+   "state": "post",
+   "teams": [
+    {
+     "name": "FURIA",
+     "full": "FURIA",
+     "logo": "data/logos/dafa9f6edf0df99a.png",
+     "score": 2
+    },
+    {
+     "name": "Falcons",
+     "full": "Team Falcons",
+     "logo": "data/logos/ffc4fafd2b3d3a96.png",
+     "score": 0
+    }
+   ],
+   "bestof": 3,
+   "tournament": "BLAST Rivals Fall 2026 - Playoffs",
+   "tournament_icon": null,
+   "streams": [],
+   "links": []
+  },
+  {
+   "id": "410f53ed9e",
+   "ts": 1794729600,
+   "state": "pre",
    "teams": [
     {
      "name": "FURIA",
@@ -493,31 +517,18 @@
      "score": null
     },
     {
-     "name": "Falcons",
-     "full": "Team Falcons",
-     "logo": "data/logos/ffc4fafd2b3d3a96.png",
+     "name": "Spirit",
+     "full": "Team Spirit",
+     "logo": "data/logos/8c4274b6e3dc87de.png",
      "score": null
     }
    ],
-   "bestof": 3,
+   "bestof": 5,
    "tournament": "BLAST Rivals Fall 2026 - Playoffs",
    "tournament_icon": null,
-   "streams": [
-    {
-     "platform": "twitch",
-     "channel": "BLAST_Premier"
-    },
-    {
-     "platform": "youtube",
-     "channel": "BLAST_Premier"
-    },
-    {
-     "platform": "kick",
-     "channel": "BLAST_Premier"
-    }
-   ],
+   "streams": [],
    "links": []
   }
  ],
- "updated": "2026-11-14T10:53:00+00:00"
+ "updated": "2026-11-14T16:50:41+00:00"
 }
