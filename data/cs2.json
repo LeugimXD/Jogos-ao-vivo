@@ -482,9 +482,9 @@
    ]
   },
   {
-   "id": "8a0fc401a2",
-   "ts": 1794652200,
-   "state": "pre",
+   "id": "2421eef0cb",
+   "ts": 1794652500,
+   "state": "in",
    "teams": [
     {
      "name": "FURIA",
@@ -502,9 +502,22 @@
    "bestof": 3,
    "tournament": "BLAST Rivals Fall 2026 - Playoffs",
    "tournament_icon": null,
-   "streams": [],
+   "streams": [
+    {
+     "platform": "twitch",
+     "channel": "BLAST_Premier"
+    },
+    {
+     "platform": "youtube",
+     "channel": "BLAST_Premier"
+    },
+    {
+     "platform": "kick",
+     "channel": "BLAST_Premier"
+    }
+   ],
    "links": []
   }
  ],
- "updated": "2026-11-13T18:09:42+00:00"
+ "updated": "2026-11-14T10:53:00+00:00"
 }
