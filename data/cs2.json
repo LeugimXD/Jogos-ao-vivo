@@ -529,9 +529,22 @@
    "bestof": 5,
    "tournament": "BLAST Rivals Fall 2026 - Playoffs",
    "tournament_icon": null,
-   "streams": [],
+   "streams": [
+    {
+     "platform": "twitch",
+     "channel": "BLAST_Premier"
+    },
+    {
+     "platform": "youtube",
+     "channel": "BLAST_Premier"
+    },
+    {
+     "platform": "kick",
+     "channel": "BLAST_Premier"
+    }
+   ],
    "links": []
   }
  ],
- "updated": "2026-11-14T21:05:29+00:00"
+ "updated": "2026-11-15T07:44:58+00:00"
 }
