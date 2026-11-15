@@ -511,40 +511,31 @@
   {
    "id": "410f53ed9e",
    "ts": 1794729600,
-   "state": "pre",
+   "state": "post",
    "teams": [
     {
      "name": "FURIA",
      "full": "FURIA",
      "logo": "data/logos/dafa9f6edf0df99a.png",
-     "score": null
+     "score": 3
     },
     {
      "name": "Spirit",
      "full": "Team Spirit",
      "logo": "data/logos/8c4274b6e3dc87de.png",
-     "score": null
+     "score": 0
     }
    ],
    "bestof": 5,
    "tournament": "BLAST Rivals Fall 2026 - Playoffs",
    "tournament_icon": null,
-   "streams": [
-    {
-     "platform": "twitch",
-     "channel": "BLAST_Premier"
-    },
-    {
-     "platform": "youtube",
-     "channel": "BLAST_Premier"
-    },
-    {
-     "platform": "kick",
-     "channel": "BLAST_Premier"
-    }
-   ],
-   "links": []
+   "streams": [],
+   "links": [
+    "https://youtu.be/FGK9LuXKm8g?t=25",
+    "https://youtu.be/FGK9LuXKm8g?t=3210",
+    "https://youtu.be/FGK9LuXKm8g?t=5750"
+   ]
   }
  ],
- "updated": "2026-11-15T07:44:58+00:00"
+ "updated": "2026-11-15T14:59:13+00:00"
 }
